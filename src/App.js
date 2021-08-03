@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
+ 
 import HomePage from './pages/HomePage';
 import SearchPage from './pages/SearchPage';
 import PlayPage from './pages/PlayPage';
