@@ -2,15 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5fce45c2-0550-47c4-808f-3d35d022fd74" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/font/SpoqaHanSansNeo-Bold.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/font/SpoqaHanSansNeo-Light.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/font/SpoqaHanSansNeo-Medium.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/font/SpoqaHanSansNeo-Regular.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/font/SpoqaHanSansNeo-Thin.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/GlobalStyles.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/GlobalStyles.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/GlobalStyles.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/HomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/HomePage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
