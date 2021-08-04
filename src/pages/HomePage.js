@@ -1,5 +1,11 @@
-function HomePage() {
-    return <>home</>;
+
+
+const HomePage = () => {
+    return (
+        <>
+        </>
+    );
+
 }
 
 export default HomePage;
