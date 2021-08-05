@@ -129,19 +129,35 @@ const HomePage = () => {
                     </HighlightBoxTroupe>
                 </SearchTargetBox>
                <OptionBox>
-                   <SearchOption>
-                       <OptionTitle>제목</OptionTitle>
-                       <OptionInput type="text" placeholder="어떤 제목인가요?"/>
-                   </SearchOption>
+                   {selectedTarget === '연극'
+                       ?(<SearchOption>
+                           <OptionTitle>제목</OptionTitle>
+                           <OptionInput type="text" placeholder="어떤 제목인가요?"/>
+                        </SearchOption>
+                       ):(<SearchOption>
+                           <OptionTitle>이름</OptionTitle>
+                           <OptionInput type="text" placeholder="극단 이름을 입력해 주세요"/>
+                          </SearchOption>
+                       )}
                    <VerticalLine/>
-                   <SearchOption>
-                       <OptionTitle>지역</OptionTitle>
-                       <OptionSelect name="selectOption">
-                           <option value="">지역을 선택해 주세요</option>
-                           <option value="seoul">서울</option>
-                           <option value="gyeonggi">경기</option>
-                       </OptionSelect>
-                   </SearchOption>
+                   {selectedTarget === '연극'
+                       ?( <SearchOption>
+                           <OptionTitle>지역</OptionTitle>
+                           <OptionSelect name="selectOption">
+                               <option value="">지역을 선택해 주세요</option>
+                               <option value="seoul">서울</option>
+                               <option value="gyeonggi">경기</option>
+                           </OptionSelect>
+                        </SearchOption>
+                       ):( <SearchOption>
+                               <OptionTitle>타입</OptionTitle>
+                               <OptionSelect name="selectOption">
+                                   <option value="">극단 타입을 선택해 주세요</option>
+                                   <option value="normal">일반 극단</option>
+                                   <option value="student">학생 극단</option>
+                               </OptionSelect>
+                           </SearchOption>
+                       )}
                </OptionBox>
             </Background>
         </>
