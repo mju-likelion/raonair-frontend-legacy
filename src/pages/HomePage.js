@@ -94,6 +94,15 @@ const OptionInput = styled.input`
   border: 0;
 `;
 
+const OptionSelect = styled.select`
+  width: 202px;
+  height: 24px;
+  border: 0;
+  color: gray;
+  font-size: 13.3px;
+`;
+
+
 const VerticalLine = styled.div`
   align-self: center;
   width: 1px;
@@ -127,7 +136,11 @@ const HomePage = () => {
                    <VerticalLine/>
                    <SearchOption>
                        <OptionTitle>지역</OptionTitle>
-                       <OptionInput type="text" placeholder="어떤 제목인가요?"/>
+                       <OptionSelect name="selectOption">
+                           <option value="">지역을 선택해 주세요</option>
+                           <option value="seoul">서울</option>
+                           <option value="gyeonggi">경기</option>
+                       </OptionSelect>
                    </SearchOption>
                </OptionBox>
             </Background>
