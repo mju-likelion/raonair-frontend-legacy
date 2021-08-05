@@ -56,14 +56,14 @@ const HighlightBox = styled.div`
 
 const HighlightBoxPlay = styled(HighlightBox)`
     ${({highlight}) =>
-    (highlight === '연극') && css`
+    (highlight === 'play') && css`
             background-color: white;
         `}
 `;
 
 const HighlightBoxTroupe = styled(HighlightBox)`
     ${({highlight}) =>
-    (highlight === '극단') && css`
+    (highlight === 'troupe') && css`
             background-color: white;
         `};
 `;
@@ -85,7 +85,7 @@ const SearchOption = styled.div`
 `;
 
 const OptionTitle = styled.h4`
-    font-weight: normal;
+  font-weight: normal;
 `;
 
 const OptionInput = styled.input`
@@ -111,9 +111,10 @@ const VerticalLine = styled.div`
 `;
 
 const HomePage = () => {
-    const [selectedTarget, setSelectedTarget] = useState('연극');
+    const [selectedTarget, setSelectedTarget] = useState('play');
     const handleClick = useCallback(({nativeEvent:{target:{innerText}}}) => {
-        setSelectedTarget(innerText);
+        const target = (innerText === '연극' ? 'play' : 'troupe');
+        setSelectedTarget(target);
     }, [setSelectedTarget]);
 
     return (
@@ -129,7 +130,7 @@ const HomePage = () => {
                     </HighlightBoxTroupe>
                 </SearchTargetBox>
                <OptionBox>
-                   {selectedTarget === '연극'
+                   {selectedTarget === 'play'
                        ?(<SearchOption>
                            <OptionTitle>제목</OptionTitle>
                            <OptionInput type="text" placeholder="어떤 제목인가요?"/>
@@ -140,7 +141,7 @@ const HomePage = () => {
                           </SearchOption>
                        )}
                    <VerticalLine/>
-                   {selectedTarget === '연극'
+                   {selectedTarget === 'play'
                        ?( <SearchOption>
                            <OptionTitle>지역</OptionTitle>
                            <OptionSelect name="selectOption">
