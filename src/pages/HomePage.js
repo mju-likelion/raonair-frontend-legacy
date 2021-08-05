@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useCallback} from 'react';
 import styled, {css} from 'styled-components';
 
 const Background = styled.div`
@@ -49,6 +49,9 @@ const HighlightBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  &:hover {
+    cursor: grab;
+  }
 `;
 
 const HighlightBoxPlay = styled(HighlightBox)`
@@ -67,16 +70,20 @@ const HighlightBoxTroupe = styled(HighlightBox)`
 
 const HomePage = () => {
     const [selectedTarget, setSelectedTarget] = useState('연극');
+    const handleClick = useCallback(({nativeEvent:{target:{innerText}}}) => {
+        setSelectedTarget(innerText);
+    }, [setSelectedTarget]);
+
     return (
         <>
             <Background>
                 <HeadLine>라온에어에 오신걸 환영합니다.  원하시는 연극 또는 극단을 검색해 주세요.</HeadLine>
                 <SearchTargetBox>
                     <HighlightBoxPlay highlight={selectedTarget}>
-                        <SearchTarget >연극</SearchTarget>
+                        <SearchTarget onClick={handleClick}>연극</SearchTarget>
                     </HighlightBoxPlay>
                     <HighlightBoxTroupe highlight={selectedTarget}>
-                        <SearchTarget>극단</SearchTarget>
+                        <SearchTarget onClick={handleClick}>극단</SearchTarget>
                     </HighlightBoxTroupe>
                 </SearchTargetBox>
             </Background>
