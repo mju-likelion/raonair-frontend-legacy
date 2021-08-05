@@ -68,6 +68,39 @@ const HighlightBoxTroupe = styled(HighlightBox)`
         `};
 `;
 
+const OptionBox = styled.div`
+  width: 900px;
+  height: 110px;
+  margin-top: 48px;
+  background-color: white;
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 36px;
+  display: flex;
+  justify-content: space-evenly;
+`;
+
+const SearchOption = styled.div`
+  width: 378px;
+  height: 58px;
+`;
+
+const OptionTitle = styled.h4`
+    font-weight: normal;
+`;
+
+const OptionInput = styled.input`
+  width: 202px;
+  height: 24px;
+  border: 0;
+`;
+
+const VerticalLine = styled.div`
+  align-self: center;
+  width: 1px;
+  height: 90px; 
+  background-color: lightgray;
+`;
+
 const HomePage = () => {
     const [selectedTarget, setSelectedTarget] = useState('연극');
     const handleClick = useCallback(({nativeEvent:{target:{innerText}}}) => {
@@ -86,6 +119,17 @@ const HomePage = () => {
                         <SearchTarget onClick={handleClick}>극단</SearchTarget>
                     </HighlightBoxTroupe>
                 </SearchTargetBox>
+               <OptionBox>
+                   <SearchOption>
+                       <OptionTitle>제목</OptionTitle>
+                       <OptionInput type="text" placeholder="어떤 제목인가요?"/>
+                   </SearchOption>
+                   <VerticalLine/>
+                   <SearchOption>
+                       <OptionTitle>지역</OptionTitle>
+                       <OptionInput type="text" placeholder="어떤 제목인가요?"/>
+                   </SearchOption>
+               </OptionBox>
             </Background>
         </>
     );
