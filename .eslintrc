@@ -32,7 +32,6 @@
   },
   "rules": {
     "import/no-anonymouse-default-export": "off",
-    "import/no-named-as-default-member": "off",
     "import/no-extraneous-dependencies": "off",
     "import/order": [
       "error",
