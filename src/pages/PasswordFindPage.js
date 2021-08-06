@@ -1,5 +1,5 @@
 function PasswordFindPage() {
-    return <>PasswordFindPage</>
+  return <>PasswordFindPage</>;
 }
 
 export default PasswordFindPage;

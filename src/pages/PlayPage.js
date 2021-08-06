@@ -1,5 +1,5 @@
 function PlayPage() {
-    return <>Play</>;
+  return <>Play</>;
 }
 
 export default PlayPage;

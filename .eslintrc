@@ -1,0 +1,73 @@
+{
+  "extends": [
+    "airbnb",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [
+    "prettier",
+    "react-hooks"
+  ],
+  "env": {
+    "browser": true,
+    "jest": true
+  },
+  "ignorePatterns": [
+    "node_modules/",
+    ".idea/"
+  ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": [
+          "src"
+        ]
+      }
+    },
+    "insert_final_newline": true
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "allowImportExportEveryWhere": true,
+    "ecmaVersion": 11
+  },
+  "rules": {
+    "import/no-anonymouse-default-export": "off",
+    "import/no-extraneous-dependencies": "off",
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling"
+        ],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": false
+        }
+      }
+    ],
+    "import/prefer-default-export": "off",
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "jsx-a11y/anchor-is-valid": "off",
+    "no-console": "error",
+    "no-unused-vars": "error",
+    "react/jsx-props-no-spreading": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-filename-extension": [
+      "warn",
+      {
+        "extensions": [".js", ".jsx"]
+      }
+    ]
+  }
+}
