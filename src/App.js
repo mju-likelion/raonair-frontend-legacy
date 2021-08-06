@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import GlobalStyles from './components/GlobalStyles';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import PasswordFindPage from './pages/PasswordFindPage';
@@ -11,6 +12,7 @@ import TroupePage from './pages/TroupePage';
 function App() {
   return (
     <Router>
+      <GlobalStyles />
       {/* header component 위치 */}
       <Switch>
         <Route path='/' exact>

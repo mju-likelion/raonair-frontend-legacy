@@ -29,7 +29,10 @@
     }
   },
   "lint-staged": {
-    "*.js": [",./node_modules/.bin/eslint — fix", "git add"]
+    "*.js": [
+      ",./node_modules/.bin/eslint — fix",
+      "git add"
+    ]
   },
   "parser": "babel-eslint",
   "eslintConfig": {
@@ -55,6 +58,7 @@
     ]
   },
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",
