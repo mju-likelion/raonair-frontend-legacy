@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
- 
+
 import HomePage from './pages/HomePage';
-import SearchPage from './pages/SearchPage';
-import PlayPage from './pages/PlayPage';
-import PasswordFindPage from './pages/PasswordFindPage';
-import TroupePage from './pages/TroupePage';
 import NotFoundPage from './pages/NotFoundPage';
+import PasswordFindPage from './pages/PasswordFindPage';
+import PlayPage from './pages/PlayPage';
+import SearchPage from './pages/SearchPage';
 import SearchResultPage from './pages/SearchResultPage';
+import TroupePage from './pages/TroupePage';
 
 function App() {
   return (

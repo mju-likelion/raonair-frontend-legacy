@@ -1,33 +1,32 @@
 {
+  "extends": [
+    "airbnb",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [
+    "prettier",
+    "react-hooks"
+  ],
   "env": {
     "browser": true,
-    "node": true
+    "jest": true
   },
-  "extends": [
-    "airbnb/hooks",
-    "prettier"
+  "ignorePatterns": [
+    "node_modules/",
+    ".idea/"
   ],
-  "parser": "@babel/eslint-parser",
-  "parserOptions": {
-    "sourceType": "module",
-    "allowImportExportEveryWhere": false,
-    "ecmaFeatures": {
-      "globalReturn": false,
-      "jsx": true
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": [
+          "src"
+        ]
+      }
     },
-    "ecmaVersion": 2020,
-    "babelOptions": {
-      "configFile": "./babel.config.js"
-    }
+    "insert_final_newline": true
   },
-  "plugins": [
-    "jsx-a11y",
-    "react-hooks",
-    "@babel/",
-    "import"
-  ],
   "rules": {
-    "import/no-anonymous-default-export": "off",
+    "import/no-anonymouse-default-export": "off",
     "import/no-extraneous-dependencies": "off",
     "import/order": [
       "error",
@@ -58,13 +57,12 @@
     "no-console": "error",
     "no-unused-vars": "error",
     "react/jsx-props-no-spreading": "off",
-    "react/react-in-jsx-scope": "off"
-  },
-  "settings": {
-    "import/resolver": {
-      "typescript": {}
-    },
-    "insert_final_newline": true
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-filename-extension": [
+      "warn",
+      {
+        "extensions": [".js", ".jsx"]
+      }
+    ]
   }
 }
-
