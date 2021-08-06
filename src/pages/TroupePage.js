@@ -1,5 +1,5 @@
 function TroupePage() {
-    return <>TroupePage</>
+  return <>TroupePage</>;
 }
 
 export default TroupePage;

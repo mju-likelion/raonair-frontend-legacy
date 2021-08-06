@@ -1,5 +1,5 @@
 function SearchResultPage() {
-    return <>SearchResultPage</>
+  return <>SearchResultPage</>;
 }
 
 export default SearchResultPage;
