@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import Header from './components/Header';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import PasswordFindPage from './pages/PasswordFindPage';
@@ -11,7 +12,7 @@ import TroupePage from './pages/TroupePage';
 function App() {
   return (
     <Router>
-      {/* header component 위치 */}
+      <Header />
       <Switch>
         <Route path='/' exact>
           <HomePage />
