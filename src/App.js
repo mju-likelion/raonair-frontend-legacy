@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import GlobalStyles from './components/GlobalStyles';
 import Header from './components/Header';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -12,6 +13,7 @@ import TroupePage from './pages/TroupePage';
 function App() {
   return (
     <Router>
+      <GlobalStyles />
       <Header />
       <Switch>
         <Route path='/' exact>
