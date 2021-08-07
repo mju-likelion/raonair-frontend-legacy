@@ -6,10 +6,17 @@ const HeaderBox = styled.div`
   background-color: gray;
 `;
 
+const HeaderLogo = styled.img`
+  height: 34px;
+  width: 102.34px;
+`;
+
 const Header = () => {
   return (
     <>
-      <HeaderBox />
+      <HeaderBox>
+        <HeaderLogo src='/logo/HorizontalLogo(light).svg' />
+      </HeaderBox>
     </>
   );
 };
