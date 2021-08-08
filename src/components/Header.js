@@ -17,7 +17,7 @@ const HeaderLogo = styled.img`
 
 const ButtonBox = styled.div`
   height: 36px;
-  width: 154px;
+  width: 155px;
   margin-right: 62px;
   display: flex;
   justify-content: space-between;
@@ -39,7 +39,7 @@ const Header = () => {
         <HeaderLogo src='/logo/HorizontalLogo(light).svg' />
         <ButtonBox>
           <HeaderButton>로그인</HeaderButton>
-          <HeaderButton>회원 가입</HeaderButton>
+          <HeaderButton>회원가입</HeaderButton>
         </ButtonBox>
       </HeaderBox>
     </>
