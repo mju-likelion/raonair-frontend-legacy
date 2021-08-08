@@ -3,7 +3,6 @@ import styled from 'styled-components';
 const HeaderBox = styled.div`
   height: 64px;
   width: 100%;
-  //background-color: gray;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,8 +18,7 @@ const HeaderLogo = styled.img`
 const ButtonBox = styled.div`
   height: 36px;
   width: 154px;
-  margin-right: 48px;
-  //border: 1px solid red;
+  margin-right: 62px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -29,7 +27,6 @@ const ButtonBox = styled.div`
 const HeaderButton = styled.div`
   height: 36px;
   width: 73px;
-  //border: 1px solid red;
   display: flex;
   align-items: center;
   justify-content: center;
