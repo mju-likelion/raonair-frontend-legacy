@@ -1,4 +1,7 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+
+import LoginModal from '../modal/LoginModal';
 
 const HeaderBox = styled.div`
   height: 64px;
@@ -33,13 +36,18 @@ const HeaderButton = styled.div`
 `;
 
 const Header = () => {
+  const [clicked, setClicked] = useState(false);
+  const handleClick = () => {
+    setClicked(!clicked);
+  };
   return (
     <>
       <HeaderBox>
         <HeaderLogo src='/logo/HorizontalLogo(light).svg' />
         <ButtonBox>
-          <HeaderButton>로그인</HeaderButton>
+          <HeaderButton onClick={handleClick}>로그인</HeaderButton>
           <HeaderButton>회원가입</HeaderButton>
+          {clicked ? <LoginModal /> : null}
         </ButtonBox>
       </HeaderBox>
     </>
