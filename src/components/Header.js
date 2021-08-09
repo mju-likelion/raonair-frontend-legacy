@@ -43,10 +43,12 @@ const Header = () => {
 
   const toggleLoginModalOpen = () => {
     setLoginModalOpen(!loginModalOpen);
+    setSignupModalOpen(false);
   };
 
   const toggleSignupModalOpen = () => {
     setSignupModalOpen(!signupModalOpen);
+    setLoginModalOpen(false);
   };
 
   return (

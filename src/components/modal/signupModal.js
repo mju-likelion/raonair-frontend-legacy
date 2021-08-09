@@ -4,11 +4,10 @@ import styled from 'styled-components';
 import ModalBox from './CommonModalBox';
 
 const SignupBox = styled(ModalBox)`
-  height: 397px;
-  width: 444px;
+  height: 391px;
+  width: 438px;
   margin-top: -198.5px;
   margin-left: -222px;
-  background-color: gray;
 `;
 
 const SignupModal = ({ onClose }) => {

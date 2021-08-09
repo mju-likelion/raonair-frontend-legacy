@@ -13,9 +13,6 @@ const LoginBox = styled(ModalBox)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 3px solid #49b0ff;
-  border-radius: 12px;
-  background-color: #f6fbff;
 `;
 
 const CloseBox = styled.div`
