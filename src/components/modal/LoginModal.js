@@ -88,9 +88,13 @@ const LoginModal = ({ onClose }) => {
         </CloseBox>
         <ModalTitle>로그인</ModalTitle>
         <LoginFormBox onSubmit={formik.handleSubmit}>
-          <LoginInput placeholder='이메일 아이디' />
-          <LoginPassword type='password' placeholder='비밀번호' />
-          <LoginSubmit>로그인</LoginSubmit>
+          <LoginInput type='email' name='email' placeholder='이메일 아이디' />
+          <LoginPassword
+            type='password'
+            name='password'
+            placeholder='비밀번호'
+          />
+          <LoginSubmit type='submit'>로그인</LoginSubmit>
         </LoginFormBox>
         <FindPasswordBtn to='/auth/password-find' onClick={onClose}>
           비밀번호 찾기

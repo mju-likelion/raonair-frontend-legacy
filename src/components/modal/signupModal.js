@@ -84,11 +84,15 @@ const SignupModal = ({ onClose }) => {
         </CloseBox>
         <ModalTitle>회원가입</ModalTitle>
         <SignupFormBox onSubmit={formik.handleSubmit}>
-          <FirstFormInput placeholder='이메일' />
-          <RestFormInput type='password' placeholder='비밀번호' />
-          <RestFormInput placeholder='이름' />
-          <RestFormInput placeholder='닉네임' />
-          <SignupSubmit>회원가입</SignupSubmit>
+          <FirstFormInput type='email' name='email' placeholder='이메일' />
+          <RestFormInput
+            type='password'
+            name='password'
+            placeholder='비밀번호'
+          />
+          <RestFormInput name='name' placeholder='이름' />
+          <RestFormInput name='nickName' placeholder='닉네임' />
+          <SignupSubmit type='submit'>회원가입</SignupSubmit>
         </SignupFormBox>
       </SignupBox>
     </>
