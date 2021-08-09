@@ -1,7 +1,7 @@
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import ModalBox from './CommonModalBox';
-import ModalPortal from './ModalPortal';
 
 const LoginBox = styled(ModalBox)`
   height: 313px;
@@ -11,12 +11,19 @@ const LoginBox = styled(ModalBox)`
   background-color: gray;
 `;
 
-const LoginModal = () => {
+const LoginModal = ({ onClose }) => {
   return (
-    <ModalPortal>
+    <>
       <LoginBox />
-    </ModalPortal>
+      <button onClick={onClose} type='button'>
+        Close
+      </button>
+    </>
   );
+};
+
+LoginModal.propTypes = {
+  onClose: PropTypes.func.isRequired,
 };
 
 export default LoginModal;

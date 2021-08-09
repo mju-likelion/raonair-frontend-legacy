@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import GlobalStyles from './components/GlobalStyles';
 import Header from './components/Header';
-import { ModalProvider } from './context/ModalContext';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import PasswordFindPage from './pages/PasswordFindPage';
@@ -15,9 +14,7 @@ function App() {
   return (
     <Router>
       <GlobalStyles />
-      <ModalProvider>
-        <Header />
-      </ModalProvider>
+      <Header />
       <Switch>
         <Route path='/' exact>
           <HomePage />

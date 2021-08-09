@@ -1,7 +1,8 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
-import { ModalConsumer } from '../context/ModalContext';
-import LoginModal from '../modal/LoginModal';
+import LoginModal from './modal/LoginModal';
+import Portal from './modal/Portal';
 
 const HeaderBox = styled.div`
   height: 64px;
@@ -36,24 +37,30 @@ const HeaderButton = styled.div`
 `;
 
 const Header = () => {
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+
+  const handleLoginModalOpen = () => {
+    setLoginModalOpen(true);
+  };
+
+  const handleLoginModalClose = () => {
+    setLoginModalOpen(false);
+  };
+
   return (
     <>
       <HeaderBox>
         <HeaderLogo src='/logo/HorizontalLogo(light).svg' />
-        <ModalConsumer>
-          {({ states, actions }) => (
-            <ButtonBox>
-              <HeaderButton
-                onClick={() => actions.setClickedModal(!states.clickedModal)}
-              >
-                로그인
-              </HeaderButton>
-              <HeaderButton>회원가입</HeaderButton>
-              <>{states.clickedModal ? <LoginModal /> : null}</>
-            </ButtonBox>
-          )}
-        </ModalConsumer>
+        <ButtonBox>
+          <HeaderButton onClick={handleLoginModalOpen}>로그인</HeaderButton>
+          <HeaderButton>회원가입</HeaderButton>
+        </ButtonBox>
       </HeaderBox>
+      {loginModalOpen && (
+        <Portal>
+          <LoginModal onClose={handleLoginModalClose} />
+        </Portal>
+      )}
     </>
   );
 };
