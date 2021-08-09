@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import LoginModal from './modal/LoginModal';
 import Portal from './modal/Portal';
+import SignupModal from './modal/signupModal';
 
 const HeaderBox = styled.div`
   height: 64px;
@@ -38,9 +39,14 @@ const HeaderButton = styled.div`
 
 const Header = () => {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [signupModalOpen, setSignupModalOpen] = useState(false);
 
   const toggleLoginModalOpen = () => {
     setLoginModalOpen(!loginModalOpen);
+  };
+
+  const toggleSignupModalOpen = () => {
+    setSignupModalOpen(!signupModalOpen);
   };
 
   return (
@@ -49,12 +55,18 @@ const Header = () => {
         <HeaderLogo src='/logo/HorizontalLogo(light).svg' />
         <ButtonBox>
           <HeaderButton onClick={toggleLoginModalOpen}>로그인</HeaderButton>
-          <HeaderButton>회원가입</HeaderButton>
+          <HeaderButton onClick={toggleSignupModalOpen}>회원가입</HeaderButton>
         </ButtonBox>
       </HeaderBox>
       {loginModalOpen && (
         <Portal>
           <LoginModal onClose={toggleLoginModalOpen} />
+        </Portal>
+      )}
+      ;
+      {signupModalOpen && (
+        <Portal>
+          <SignupModal onClose={toggleSignupModalOpen} />
         </Portal>
       )}
     </>
