@@ -6,8 +6,8 @@ import styled, { css } from 'styled-components';
 import ModalBox from './CommonModalBox';
 
 const LoginBox = styled(ModalBox)`
-  height: 307px;
-  width: 434px;
+  height: 309px;
+  width: 436px;
   margin-top: -156.5px;
   margin-left: -220px;
   display: flex;
@@ -25,7 +25,7 @@ const CloseBox = styled.div`
 const CloseSvg = styled.img`
   width: 15px;
   height: 15px;
-  margin-top: 25px;
+  margin-top: 24px;
   margin-right: 33px;
 `;
 
@@ -37,7 +37,7 @@ const ModalTitle = styled.h4`
 const LoginFormBox = styled.form`
   height: 149px;
   width: 337px;
-  margin-top: 26px;
+  margin-top: 28px;
 `;
 
 const commonFromStyle = css`
@@ -45,6 +45,7 @@ const commonFromStyle = css`
   width: 332px;
   border: 1px solid #49b0ff;
   border-radius: 12px;
+  font-size: 14px;
 `;
 
 const LoginInput = styled.input`
@@ -53,13 +54,13 @@ const LoginInput = styled.input`
 `;
 
 const LoginPassword = styled(LoginInput)`
-  margin-top: 14px;
+  margin-top: 13px;
 `;
 
 const LoginSubmit = styled.button`
   ${commonFromStyle};
   height: 34px;
-  width: 335px;
+  width: 338px;
   margin-top: 30px;
   background-color: #49b0ff;
   color: white;
