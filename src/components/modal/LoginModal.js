@@ -3,35 +3,13 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
-import ModalBox from './CommonModalBox';
+import ModalBox, { GetModalTitle, CloseModalBox } from './CommonModalBox';
 
 const LoginBox = styled(ModalBox)`
   height: 309px;
   width: 436px;
   margin-top: -156.5px;
   margin-left: -220px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const CloseBox = styled.div`
-  width: 440px;
-  height: 9px;
-  display: flex;
-  flex-direction: row-reverse;
-`;
-
-const CloseSvg = styled.img`
-  width: 15px;
-  height: 15px;
-  margin-top: 24px;
-  margin-right: 33px;
-`;
-
-const ModalTitle = styled.h4`
-  font-weight: normal;
-  margin-bottom: 0px;
 `;
 
 const LoginFormBox = styled.form`
@@ -84,10 +62,8 @@ const LoginModal = ({ onClose }) => {
   return (
     <>
       <LoginBox>
-        <CloseBox>
-          <CloseSvg src='/svg/close.svg' onClick={onClose} />
-        </CloseBox>
-        <ModalTitle>로그인</ModalTitle>
+        <CloseModalBox onClose={onClose} />
+        <GetModalTitle>로그인</GetModalTitle>
         <LoginFormBox onSubmit={formik.handleSubmit}>
           <LoginInput type='email' name='email' placeholder='이메일 아이디' />
           <LoginPassword
