@@ -39,12 +39,8 @@ const HeaderButton = styled.div`
 const Header = () => {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
 
-  const handleLoginModalOpen = () => {
-    setLoginModalOpen(true);
-  };
-
-  const handleLoginModalClose = () => {
-    setLoginModalOpen(false);
+  const toggleLoginModalOpen = () => {
+    setLoginModalOpen(!loginModalOpen);
   };
 
   return (
@@ -52,13 +48,13 @@ const Header = () => {
       <HeaderBox>
         <HeaderLogo src='/logo/HorizontalLogo(light).svg' />
         <ButtonBox>
-          <HeaderButton onClick={handleLoginModalOpen}>로그인</HeaderButton>
+          <HeaderButton onClick={toggleLoginModalOpen}>로그인</HeaderButton>
           <HeaderButton>회원가입</HeaderButton>
         </ButtonBox>
       </HeaderBox>
       {loginModalOpen && (
         <Portal>
-          <LoginModal onClose={handleLoginModalClose} />
+          <LoginModal onClose={toggleLoginModalOpen} />
         </Portal>
       )}
     </>

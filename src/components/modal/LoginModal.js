@@ -11,13 +11,28 @@ const LoginBox = styled(ModalBox)`
   background-color: gray;
 `;
 
+const CloseBox = styled.div`
+  width: 440px;
+  height: 15px;
+  display: flex;
+  flex-direction: row-reverse;
+`;
+
+const CloseSvg = styled.img`
+  width: 15px;
+  height: 15px;
+  margin-top: 28px;
+  margin-right: 33px;
+`;
+
 const LoginModal = ({ onClose }) => {
   return (
     <>
-      <LoginBox />
-      <button onClick={onClose} type='button'>
-        Close
-      </button>
+      <LoginBox>
+        <CloseBox>
+          <CloseSvg src='/svg/close.svg' onClick={onClose} />
+        </CloseBox>
+      </LoginBox>
     </>
   );
 };
