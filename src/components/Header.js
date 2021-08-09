@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 
+import { ModalConsumer } from '../context/ModalContext';
 import LoginModal from '../modal/LoginModal';
 
 const HeaderBox = styled.div`
@@ -36,19 +36,23 @@ const HeaderButton = styled.div`
 `;
 
 const Header = () => {
-  const [clicked, setClicked] = useState(false);
-  const handleClick = () => {
-    setClicked(!clicked);
-  };
   return (
     <>
       <HeaderBox>
         <HeaderLogo src='/logo/HorizontalLogo(light).svg' />
-        <ButtonBox>
-          <HeaderButton onClick={handleClick}>로그인</HeaderButton>
-          <HeaderButton>회원가입</HeaderButton>
-          {clicked ? <LoginModal /> : null}
-        </ButtonBox>
+        <ModalConsumer>
+          {({ states, actions }) => (
+            <ButtonBox>
+              <HeaderButton
+                onClick={() => actions.setClickedModal(!states.clickedModal)}
+              >
+                로그인
+              </HeaderButton>
+              <HeaderButton>회원가입</HeaderButton>
+              <>{states.clickedModal ? <LoginModal /> : null}</>
+            </ButtonBox>
+          )}
+        </ModalConsumer>
       </HeaderBox>
     </>
   );
