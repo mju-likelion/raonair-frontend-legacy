@@ -2,7 +2,7 @@ import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import ModalBox, { GetModalTitle, CloseModalBox } from './CommonModalBox';
+import ModalBox, { CloseBox, CloseSvg, ModalTitle } from './CommonModalBox';
 
 const SignupBox = styled(ModalBox)`
   height: 393px;
@@ -57,8 +57,10 @@ const SignupModal = ({ onClose }) => {
   return (
     <>
       <SignupBox>
-        <CloseModalBox onClose={onClose} />
-        <GetModalTitle>회원가입</GetModalTitle>
+        <CloseBox onClick={onClose}>
+          <CloseSvg src='/svg/close.svg' />
+        </CloseBox>
+        <ModalTitle>회원가입</ModalTitle>
         <SignupFormBox onSubmit={formik.handleSubmit}>
           <FirstFormInput type='email' name='email' placeholder='이메일' />
           <RestFormInput

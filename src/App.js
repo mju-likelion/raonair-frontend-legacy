@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
 
 import SetGlobalStyles from './components/GlobalStyles';
 import Header from './components/Header';
@@ -14,7 +15,9 @@ function App() {
   return (
     <Router>
       <SetGlobalStyles />
-      <Header />
+      <RecoilRoot>
+        <Header />
+      </RecoilRoot>
       <Switch>
         <Route path='/' exact>
           <HomePage />

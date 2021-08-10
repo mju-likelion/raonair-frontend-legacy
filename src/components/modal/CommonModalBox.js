@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const ModalBox = styled.div`
@@ -27,29 +26,11 @@ const CloseSvg = styled.img`
   margin-right: 33px;
 `;
 
-export const ModalTitle = styled.h4`
+const ModalTitle = styled.h4`
   font-weight: normal;
   margin-bottom: 0;
 `;
 
-export const CloseModalBox = ({ onClose }) => {
-  return (
-    <CloseBox onClick={onClose}>
-      <CloseSvg src='/svg/close.svg' />
-    </CloseBox>
-  );
-};
-
-CloseModalBox.propTypes = {
-  onClose: PropTypes.func.isRequired,
-};
-
-export const GetModalTitle = ({ children }) => {
-  return <ModalTitle>{children}</ModalTitle>;
-};
-
-GetModalTitle.propTypes = {
-  children: PropTypes.string.isRequired,
-};
+export { CloseBox, CloseSvg, ModalTitle };
 
 export default ModalBox;
