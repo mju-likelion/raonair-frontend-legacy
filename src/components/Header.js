@@ -65,7 +65,6 @@ const Header = () => {
           <LoginModal onClose={toggleLoginModalOpen} />
         </Portal>
       )}
-      ;
       {signupModalOpen && (
         <Portal>
           <SignupModal onClose={toggleSignupModalOpen} />

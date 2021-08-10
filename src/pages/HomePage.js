@@ -14,12 +14,13 @@ const Background = styled.div`
 
 const HeadLine = styled.h2`
   color: white;
-  margin-top: 100px;
+  margin-top: 87px;
 `;
 
 const SearchTargetBox = styled.div`
   width: 224px;
   height: 48px;
+  margin-top: 12px;
   background: #e5e5e5;
   border-radius: 48px;
   display: flex;
@@ -30,6 +31,7 @@ const SearchTargetBox = styled.div`
 const SearchTarget = styled.p`
   width: 34px;
   height: 20px;
+  margin-left: 2px;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
@@ -88,6 +90,8 @@ const SearchOption = styled.div`
 `;
 
 const OptionTitle = styled.h4`
+  margin-top: 27px;
+  margin-bottom: 14px;
   font-weight: normal;
 `;
 
@@ -95,6 +99,8 @@ const OptionInput = styled.input`
   width: 378px;
   height: 24px;
   border: 0;
+  font-size: 20px;
+  margin-left: -3px;
 `;
 
 const OptionSelect = styled.select`
@@ -103,7 +109,7 @@ const OptionSelect = styled.select`
   height: 24px;
   border: 0;
   color: gray;
-  font-size: 13.3px;
+  font-size: 20px;
 `;
 
 const VerticalLine = styled.div`
