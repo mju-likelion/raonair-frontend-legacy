@@ -1,7 +1,9 @@
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
+import * as Yup from 'yup';
 
 import ModalBox, { CloseBox, CloseSvg, ModalTitle } from './CommonModalBox';
 
@@ -50,14 +52,43 @@ const FindPasswordBtn = styled(Link)`
   font-size: 12px;
 `;
 
+// const Warning = styled.p`
+//   width: 338px;
+//   font-size: 12px;
+//   color: #49b0ff;
+//   text-align: center;
+// `;
+
 const LoginModal = ({ onClose }) => {
+  const [focus, setFocus] = useState({
+    email: false,
+    password: false,
+  });
+  // const [currFocused, setCurrFocues] = useState('');
+
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
     },
+    validationSchema: Yup.object({
+      email: Yup.string().email('이메일 형식에 맞지 않습니다').required(),
+      password: Yup.string()
+        .min(8, '비밀번호는 최소 8글자 이상 입력해주세요.')
+        .required(),
+    }),
     onSubmit: () => {},
   });
+
+  const handleFocus = e => {
+    setFocus({ ...focus, [e.target.name]: false });
+    // setCurrFocues(e.target.name);
+  };
+
+  const handleBlur = e => {
+    formik.handleBlur(e);
+    setFocus({ ...focus, [e.target.name]: false });
+  };
 
   return (
     <>
@@ -67,13 +98,37 @@ const LoginModal = ({ onClose }) => {
         </CloseBox>
         <ModalTitle>로그인</ModalTitle>
         <LoginFormBox onSubmit={formik.handleSubmit}>
-          <LoginInput type='email' name='email' placeholder='이메일 아이디' />
+          <LoginInput
+            name='email'
+            onChange={formik.handleChange}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            placeholder='이메일 아이디'
+          />
           <LoginPassword
             type='password'
             name='password'
+            onChange={formik.handleChange}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             placeholder='비밀번호'
           />
           <LoginSubmit type='submit'>로그인</LoginSubmit>
+          {/* eslint-disable */}
+          {/*{formik.touched.password &&*/}
+          {/*  formik.errors.password &&*/}
+          {/*  !focus.password &&*/}
+          {/*  currFocused === 'password' && (*/}
+          {/*    <Warning>{formik.errors.password}</Warning>*/}
+          {/*  )*/}
+          {/*}*/}
+          {/*{formik.touched.email &&*/}
+          {/*  formik.errors.email &&*/}
+          {/*  !focus.email &&*/}
+          {/*  currFocused === 'email' && (*/}
+          {/*  <Warning>{formik.errors.email}</Warning>*/}
+          {/*)}*/}
+          {/* eslint-enable */}
         </LoginFormBox>
         <FindPasswordBtn to='/auth/password-find' onClick={onClose}>
           비밀번호 찾기
