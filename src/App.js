@@ -1,5 +1,8 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
 
+import SetGlobalStyles from './components/GlobalStyles';
+import Header from './components/Header';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import PasswordFindPage from './pages/PasswordFindPage';
@@ -11,7 +14,10 @@ import TroupePage from './pages/TroupePage';
 function App() {
   return (
     <Router>
-      {/* header component 위치 */}
+      <SetGlobalStyles />
+      <RecoilRoot>
+        <Header />
+      </RecoilRoot>
       <Switch>
         <Route path='/' exact>
           <HomePage />
