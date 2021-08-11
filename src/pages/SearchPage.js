@@ -1,3 +1,5 @@
+import axios from 'axios';
+import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
@@ -87,6 +89,30 @@ function SearchPage() {
   // query string 있으면 검색결과 렌더링
   // 없으면 검색 창을 렌더링
   const [searchCondition] = useRecoilState(searchConditionState);
+  // const [searchResult, setSearchResult] = useState({});
+  useEffect(() => {
+    const callApi = async () => {
+      try {
+        const {
+          data: {
+            data: { searched_results: searchedResults },
+          },
+        } = await axios({
+          method: 'get',
+          url: `${process.env.REACT_APP_SERVER_ORIGIN}/api/search/play`,
+          params: {
+            query: '째',
+          },
+        });
+        // eslint-disable-next-line no-console
+        console.log(searchedResults);
+        return 1;
+      } catch (err) {
+        return err;
+      }
+    };
+    callApi();
+  }, []);
   // eslint-disable-next-line no-console
   console.log(searchCondition);
   return (
