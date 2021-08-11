@@ -6,7 +6,6 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
   }
-  
   * {
     font-family: "Spoqa Han Sans Neo", 'Noto Sons KR';
     source: url(${`${process.env.PUBLIC_URL}/font/SpoqaHanSansNeo-Medium.otf`});
