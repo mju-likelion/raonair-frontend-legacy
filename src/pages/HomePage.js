@@ -181,7 +181,7 @@ const HomePage = () => {
 
   return (
     <>
-      <Background>
+      <Background onKeyPress={handleKeyPress}>
         <HeadLine>
           라온에어에 오신걸 환영합니다. 원하시는 연극 또는 극단을 검색해 주세요.
         </HeadLine>
@@ -193,8 +193,10 @@ const HomePage = () => {
             <SearchTarget onClick={handleClick}>극단</SearchTarget>
           </HighlightBoxTroupe>
         </SearchTargetBox>
-        {redirect && <Redirect to={`/search/${searchCondition.target}`} />}
-        <OptionBox onKeyPress={handleKeyPress}>
+        {redirect && (
+          <Redirect to={`/search?query=${searchCondition.searchTerm}`} />
+        )}
+        <OptionBox>
           {selectedTarget === 'play' ? (
             <SearchOption>
               <OptionTitle>제목</OptionTitle>
