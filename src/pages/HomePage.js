@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { useState, useEffect, useCallback } from 'react';
+import { Redirect } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import styled, { css } from 'styled-components';
+
+import { searchConditionState } from '../globalState/search';
 
 const Background = styled.div`
   height: 100vh;
@@ -106,7 +110,6 @@ const OptionInput = styled.input`
 
 const OptionSelect = styled.select`
   width: 378px;
-  //width: 202px;
   height: 24px;
   border: 0;
   color: gray;
@@ -123,6 +126,10 @@ const VerticalLine = styled.div`
 const HomePage = () => {
   const [selectedTarget, setSelectedTarget] = useState('play');
   const [searchOptions, setSearchOptions] = useState([]);
+  const [redirect, setRedirect] = useState(false);
+  const [searchCondition, setSearchCondition] =
+    useRecoilState(searchConditionState);
+
   useEffect(() => {
     const getSearchOptions = async () => {
       try {
@@ -149,10 +156,25 @@ const HomePage = () => {
       },
     }) => {
       const target = innerText === '연극' ? 'play' : 'troupe';
+      setSearchCondition({ ...searchCondition, target });
       setSelectedTarget(target);
     },
     [setSelectedTarget],
   );
+
+  const handleChange = ({ target: { value, name } }) => {
+    setSearchCondition({ ...searchCondition, [name]: value });
+  };
+
+  const handleKeyPress = ({ key }) => {
+    if (key === 'Enter') {
+      setRedirect(true);
+    }
+  };
+
+  const handleFocus = e => {
+    e.target.value = '';
+  };
 
   return (
     <>
@@ -168,26 +190,36 @@ const HomePage = () => {
             <SearchTarget onClick={handleClick}>극단</SearchTarget>
           </HighlightBoxTroupe>
         </SearchTargetBox>
-        <OptionBox>
+        {redirect && <Redirect to={`/search/${searchCondition.target}`} />}
+        <OptionBox onKeyPress={handleKeyPress}>
           {selectedTarget === 'play' ? (
             <SearchOption>
               <OptionTitle>제목</OptionTitle>
-              <OptionInput type='text' placeholder='어떤 제목인가요?' />
+              <OptionInput
+                type='text'
+                name='searchTerm'
+                placeholder='어떤 제목인가요?'
+                onChange={handleChange}
+                onFocus={handleFocus}
+              />
             </SearchOption>
           ) : (
             <SearchOption>
               <OptionTitle>이름</OptionTitle>
               <OptionInput
                 type='text'
+                name='searchTerm'
                 placeholder='극단 이름을 입력해 주세요'
+                onChange={handleChange}
+                onFocus={handleFocus}
               />
             </SearchOption>
           )}
           <VerticalLine />
           {selectedTarget === 'play' ? (
-            <SearchOption>
+            <SearchOption onChange={handleChange}>
               <OptionTitle>지역</OptionTitle>
-              <OptionSelect name='selectOption'>
+              <OptionSelect name='option'>
                 <option value=''>지역을 선택해 주세요</option>
                 {searchOptions.map(({ key, value }) => (
                   <option value={key} key={key}>
@@ -197,9 +229,9 @@ const HomePage = () => {
               </OptionSelect>
             </SearchOption>
           ) : (
-            <SearchOption>
+            <SearchOption onChange={handleChange}>
               <OptionTitle>타입</OptionTitle>
-              <OptionSelect name='selectOption'>
+              <OptionSelect name='option'>
                 <option value=''>극단 타입을 선택해 주세요</option>
                 <option value='normal'>일반 극단</option>
                 <option value='student'>학생 극단</option>
