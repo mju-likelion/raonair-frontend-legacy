@@ -1,4 +1,5 @@
-import { useState, useCallback } from 'react';
+import axios from 'axios';
+import { useState, useEffect, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 
 const Background = styled.div`
@@ -121,6 +122,26 @@ const VerticalLine = styled.div`
 
 const HomePage = () => {
   const [selectedTarget, setSelectedTarget] = useState('play');
+  const [searchOptions, setSearchOptions] = useState([]);
+  useEffect(() => {
+    const getSearchOptions = async () => {
+      try {
+        const {
+          data: {
+            data: { play_options: playOptions },
+          },
+        } = await axios({
+          method: 'GET',
+          url: `${process.env.REACT_APP_SERVER_ORIGIN}/api/search/play-options`,
+        });
+        return setSearchOptions(playOptions);
+      } catch (err) {
+        return err;
+      }
+    };
+    getSearchOptions();
+  }, []);
+
   const handleClick = useCallback(
     ({
       nativeEvent: {
@@ -168,8 +189,11 @@ const HomePage = () => {
               <OptionTitle>지역</OptionTitle>
               <OptionSelect name='selectOption'>
                 <option value=''>지역을 선택해 주세요</option>
-                <option value='seoul'>서울</option>
-                <option value='gyeonggi'>경기</option>
+                {searchOptions.map(({ key, value }) => (
+                  <option value={key} key={key}>
+                    {value}
+                  </option>
+                ))}
               </OptionSelect>
             </SearchOption>
           ) : (
