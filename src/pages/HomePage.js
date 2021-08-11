@@ -159,12 +159,15 @@ const HomePage = () => {
       setSearchCondition({ ...searchCondition, target });
       setSelectedTarget(target);
     },
-    [setSelectedTarget],
+    [selectedTarget, searchCondition],
   );
 
-  const handleChange = ({ target: { value, name } }) => {
-    setSearchCondition({ ...searchCondition, [name]: value });
-  };
+  const handleChange = useCallback(
+    ({ target: { value, name } }) => {
+      setSearchCondition({ ...searchCondition, [name]: value });
+    },
+    [searchCondition],
+  );
 
   const handleKeyPress = ({ key }) => {
     if (key === 'Enter') {
