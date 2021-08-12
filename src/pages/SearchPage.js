@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
@@ -12,7 +12,6 @@ const PlaysBox = styled.div`
   margin-bottom: 50px;
   margin-left: auto;
   margin-right: auto;
-  //background-color: red;
 `;
 
 const SearchTerm = styled.p`
@@ -32,7 +31,6 @@ const FirstPlaysBox = styled(PlaysBox)`
 const PlayBoxNav = styled.div`
   width: 1182px;
   height: 25px;
-  //background-color: gray;
   display: flex;
   justify-content: space-between;
 `;
@@ -52,12 +50,10 @@ const PlayBox = styled.div`
   height: 420px;
   width: 240px;
   margin-top: 32px;
-  //background-color: blue;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  //margin-left: 74px;
   margin-right: 74px;
   box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
   border-radius: 6px;
@@ -74,7 +70,6 @@ const JudgeBox = styled.div`
   width: 240px;
   display: flex;
   align-items: center;
-  //background-color: green;
 `;
 
 const Judge = styled.div`
@@ -115,9 +110,11 @@ function SearchPage() {
   // query string 있으면 검색결과 렌더링
   // 없으면 검색 창을 렌더링
   const [searchCondition] = useRecoilState(searchConditionState);
-  // const [searchResult, setSearchResult] = useState({});
+  const [searchResult, setSearchResult] = useState({});
+  const [loaded, setLoaded] = useState(true);
   useEffect(() => {
     const callApi = async () => {
+      setLoaded(false);
       try {
         const {
           data: {
@@ -132,15 +129,26 @@ function SearchPage() {
         });
         // eslint-disable-next-line no-console
         console.log(searchedResults);
-        return 1;
+        return setSearchResult(searchedResults);
       } catch (err) {
         return err;
       }
     };
     callApi();
+    setLoaded(true);
   }, []);
   // eslint-disable-next-line no-console
-  console.log(searchCondition);
+  console.log(searchResult);
+  const {
+    ongoing_plays: ongoingPlays,
+    tobe_plays: tobePlays,
+    closed_plays: closedPlays,
+  } = searchResult;
+
+  if (!loaded) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <SearchTerm>
@@ -156,51 +164,35 @@ function SearchPage() {
           </ShowMoreBtn>
         </PlayBoxNav>
         <Plays>
-          <PlayBox>
-            <JudgeBox>
-              <Judge>
-                <JudgeImg src='/svg/star.svg' alt='평점' />
-                4.5
-              </Judge>
-              <JudgeHeart>
-                <JudgeImg src='/svg/heart.svg' alt='찜 갯수' />
-                99
-              </JudgeHeart>
-            </JudgeBox>
-            <PlayImage />
-            <PlayTitle>특별한 저녁식사</PlayTitle>
-            <PlayDate>9999.99.99~9999.99.99</PlayDate>
-          </PlayBox>
-          <PlayBox>
-            <JudgeBox>
-              <Judge>
-                <JudgeImg src='/svg/star.svg' alt='평점' />
-                4.5
-              </Judge>
-              <JudgeHeart>
-                <JudgeImg src='/svg/heart.svg' alt='찜 갯수' />
-                99
-              </JudgeHeart>
-            </JudgeBox>
-            <PlayImage />
-            <PlayTitle>특별한 저녁식사</PlayTitle>
-            <PlayDate>9999.99.99~9999.99.99</PlayDate>
-          </PlayBox>
-          <PlayBox>
-            <JudgeBox>
-              <Judge>
-                <JudgeImg src='/svg/star.svg' alt='평점' />
-                4.5
-              </Judge>
-              <JudgeHeart>
-                <JudgeImg src='/svg/heart.svg' alt='찜 갯수' />
-                99
-              </JudgeHeart>
-            </JudgeBox>
-            <PlayImage />
-            <PlayTitle>특별한 저녁식사</PlayTitle>
-            <PlayDate>9999.99.99~9999.99.99</PlayDate>
-          </PlayBox>
+          {ongoingPlays &&
+            ongoingPlays.map(play => {
+              const {
+                id,
+                poster,
+                title,
+                likes,
+                star_avg: starAvg,
+                start_date: startDate,
+                end_data: endDate,
+              } = play;
+              return (
+                <PlayBox key={id}>
+                  <JudgeBox>
+                    <Judge>
+                      <JudgeImg src='/svg/star.svg' alt='평점' />
+                      {starAvg}
+                    </Judge>
+                    <JudgeHeart>
+                      <JudgeImg src='/svg/heart.svg' alt='찜 갯수' />
+                      {likes}
+                    </JudgeHeart>
+                  </JudgeBox>
+                  <PlayImage src={poster} />
+                  <PlayTitle>{title}</PlayTitle>
+                  <PlayDate>{`${startDate}~${endDate || ''}`}</PlayDate>
+                </PlayBox>
+              );
+            })}
           <PlayBox>
             <JudgeBox>
               <Judge>
@@ -225,6 +217,35 @@ function SearchPage() {
             더보기
           </ShowMoreBtn>
         </PlayBoxNav>
+        {tobePlays &&
+          tobePlays.map(play => {
+            const {
+              id,
+              poster,
+              title,
+              likes,
+              star_avg: starAvg,
+              start_date: startDate,
+              end_data: endDate,
+            } = play;
+            return (
+              <PlayBox key={id}>
+                <JudgeBox>
+                  <Judge>
+                    <JudgeImg src='/svg/star.svg' alt='평점' />
+                    {starAvg}
+                  </Judge>
+                  <JudgeHeart>
+                    <JudgeImg src='/svg/heart.svg' alt='찜 갯수' />
+                    {likes}
+                  </JudgeHeart>
+                </JudgeBox>
+                <PlayImage src={poster} />
+                <PlayTitle>{title}</PlayTitle>
+                <PlayDate>{`${startDate}~${endDate || ''}`}</PlayDate>
+              </PlayBox>
+            );
+          })}
       </PlaysBox>
       <PlaysBox>
         <PlayBoxNav>
@@ -235,6 +256,35 @@ function SearchPage() {
             더보기
           </ShowMoreBtn>
         </PlayBoxNav>
+        {closedPlays &&
+          closedPlays.map(play => {
+            const {
+              id,
+              poster,
+              title,
+              likes,
+              star_avg: starAvg,
+              start_date: startDate,
+              end_data: endDate,
+            } = play;
+            return (
+              <PlayBox key={id}>
+                <JudgeBox>
+                  <Judge>
+                    <JudgeImg src='/svg/star.svg' alt='평점' />
+                    {starAvg}
+                  </Judge>
+                  <JudgeHeart>
+                    <JudgeImg src='/svg/heart.svg' alt='찜 갯수' />
+                    {likes}
+                  </JudgeHeart>
+                </JudgeBox>
+                <PlayImage src={poster} />
+                <PlayTitle>{title}</PlayTitle>
+                <PlayDate>{`${startDate}~${endDate || ''}`}</PlayDate>
+              </PlayBox>
+            );
+          })}
       </PlaysBox>
     </>
   );
