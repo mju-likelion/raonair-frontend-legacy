@@ -5,7 +5,7 @@ import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import SearchComponent from '../components/SearchComponent';
-import { searchConditionState } from '../globalState/search';
+import { searchTargetState } from '../globalState/search';
 
 const PlaysBox = styled.div`
   height: 477px;
@@ -106,11 +106,17 @@ const PlayDate = styled.p`
 function SearchPage() {
   // query string 있으면 검색결과 렌더링
   // 없으면 검색 창을 렌더링
-  const [searchCondition] = useRecoilState(searchConditionState);
+  /* eslint-disable */
+  const [searchTarget] = useRecoilState(searchTargetState);
+  /* eslint-enable */
   const [searchResult, setSearchResult] = useState({});
   const [loaded, setLoaded] = useState(true);
   const url = new URLSearchParams(useLocation().search);
   const searchTerm = url.get('query');
+  const searchCondition = {
+    query: url.get('query'),
+    option: url.get('option'),
+  };
   useEffect(() => {
     const callApi = async () => {
       setLoaded(false);
@@ -123,7 +129,7 @@ function SearchPage() {
           method: 'get',
           url: `${process.env.REACT_APP_SERVER_ORIGIN}/api/search/play`,
           params: {
-            query: `${searchTerm}`,
+            query: `${searchCondition.query}`,
             location: `${searchCondition.option}`,
           },
         });
@@ -142,25 +148,22 @@ function SearchPage() {
     closed_plays: closedPlays,
   } = searchResult;
 
-  /* eslint-disable */
-  console.log(searchResult && Object.keys(searchResult).length === 0);
-
   const data = [
     {
       param: 'ongoing',
-      query: searchTerm,
+      query: searchCondition.query,
       categoryTitle: '진행중인 공연',
       playData: ongoingPlays,
     },
     {
       param: 'tobe',
-      query: searchTerm,
+      query: searchCondition.query,
       categoryTitle: '상영 예정인 공연',
       playData: tobePlays,
     },
     {
       param: 'closed',
-      query: searchTerm,
+      query: searchCondition.query,
       categoryTitle: '종료된 공연',
       playData: closedPlays,
     },
@@ -172,7 +175,7 @@ function SearchPage() {
 
   return (
     <>
-      {!searchTerm ? (
+      {!searchCondition.query ? (
         <SearchComponent />
       ) : (searchResult && Object.keys(searchResult).length === 0) ? <BoxTitle>검색 결과가 없습니다</BoxTitle> : (
         <>

@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled, { css } from 'styled-components';
 
-import { searchConditionState } from '../globalState/search';
+import { searchTargetState } from '../globalState/search';
 
 const Background = styled.div`
   height: 100vh;
@@ -127,9 +127,11 @@ const SearchComponent = () => {
   const [selectedTarget, setSelectedTarget] = useState('play');
   const [searchOptions, setSearchOptions] = useState([]);
   const [redirect, setRedirect] = useState(false);
-  const [searchCondition, setSearchCondition] =
-    useRecoilState(searchConditionState);
-  const [query, setQuery] = useState('');
+  const [searchTarget, setSearchTarget] = useRecoilState(searchTargetState);
+  const [searchCondition, setsearchCondition] = useState({
+    searchTerm: '',
+    option: '',
+  });
 
   useEffect(() => {
     const getSearchOptions = async () => {
@@ -157,19 +159,15 @@ const SearchComponent = () => {
       },
     }) => {
       const target = innerText === '연극' ? 'play' : 'troupe';
-      setSearchCondition({ ...searchCondition, target });
+      setSearchTarget(target);
       setSelectedTarget(target);
     },
-    [selectedTarget, searchCondition],
+    [selectedTarget, searchTarget],
   );
 
   const handleChange = useCallback(
     ({ target: { value, name } }) => {
-      if (name === 'searchTerm') {
-        setQuery(value);
-      } else {
-        setSearchCondition({ ...searchCondition, [name]: value });
-      }
+      setsearchCondition({ ...searchCondition, [name]: value });
     },
     [searchCondition],
   );
@@ -198,7 +196,11 @@ const SearchComponent = () => {
             <SearchTarget onClick={handleClick}>극단</SearchTarget>
           </HighlightBoxTroupe>
         </SearchTargetBox>
-        {redirect && <Redirect to={`/search?query=${query}`} />}
+        {redirect && (
+          <Redirect
+            to={`/search?query=${searchCondition.searchTerm}&location=${searchCondition.option}`}
+          />
+        )}
         <OptionBox>
           {selectedTarget === 'play' ? (
             <SearchOption>
