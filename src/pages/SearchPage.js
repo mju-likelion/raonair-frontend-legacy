@@ -47,11 +47,21 @@ const PlayBox = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  //margin-left: 74px;
+  margin-right: 74px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+`;
+
+const Plays = styled.div`
+  height: 420px;
+  width: 240px;
+  display: flex;
 `;
 
 const JudgeBox = styled.div`
   height: 28px;
-  width: 213px;
+  width: 240px;
   display: flex;
   align-items: center;
   background-color: green;
@@ -60,8 +70,13 @@ const JudgeBox = styled.div`
 const Judge = styled.div`
   height: 28px;
   width: 58px;
+  margin-left: 14px;
   display: flex;
   align-items: center;
+`;
+
+const JudgeHeart = styled(Judge)`
+  margin-left: 0;
 `;
 
 const JudgeImg = styled.img`
@@ -72,6 +87,7 @@ const JudgeImg = styled.img`
 const PlayImage = styled.img`
   height: 299px;
   width: 213px;
+  border-radius: 6px;
 `;
 
 const PlayTitle = styled.h4`
@@ -126,21 +142,68 @@ function SearchPage() {
             더보기
           </ShowMoreBtn>
         </PlayBoxNav>
-        <PlayBox>
-          <JudgeBox>
-            <Judge>
-              <JudgeImg src='/svg/star.svg' alt='평점' />
-              4.5
-            </Judge>
-            <Judge>
-              <JudgeImg src='/svg/heart.svg' alt='찜 갯수' />
-              99
-            </Judge>
-          </JudgeBox>
-          <PlayImage />
-          <PlayTitle>특별한 저녁식사</PlayTitle>
-          <PlayDate>9999.99.99~9999.99.99</PlayDate>
-        </PlayBox>
+        <Plays>
+          <PlayBox>
+            <JudgeBox>
+              <Judge>
+                <JudgeImg src='/svg/star.svg' alt='평점' />
+                4.5
+              </Judge>
+              <JudgeHeart>
+                <JudgeImg src='/svg/heart.svg' alt='찜 갯수' />
+                99
+              </JudgeHeart>
+            </JudgeBox>
+            <PlayImage />
+            <PlayTitle>특별한 저녁식사</PlayTitle>
+            <PlayDate>9999.99.99~9999.99.99</PlayDate>
+          </PlayBox>
+          <PlayBox>
+            <JudgeBox>
+              <Judge>
+                <JudgeImg src='/svg/star.svg' alt='평점' />
+                4.5
+              </Judge>
+              <JudgeHeart>
+                <JudgeImg src='/svg/heart.svg' alt='찜 갯수' />
+                99
+              </JudgeHeart>
+            </JudgeBox>
+            <PlayImage />
+            <PlayTitle>특별한 저녁식사</PlayTitle>
+            <PlayDate>9999.99.99~9999.99.99</PlayDate>
+          </PlayBox>
+          <PlayBox>
+            <JudgeBox>
+              <Judge>
+                <JudgeImg src='/svg/star.svg' alt='평점' />
+                4.5
+              </Judge>
+              <JudgeHeart>
+                <JudgeImg src='/svg/heart.svg' alt='찜 갯수' />
+                99
+              </JudgeHeart>
+            </JudgeBox>
+            <PlayImage />
+            <PlayTitle>특별한 저녁식사</PlayTitle>
+            <PlayDate>9999.99.99~9999.99.99</PlayDate>
+          </PlayBox>
+          <PlayBox>
+            <JudgeBox>
+              <Judge>
+                <JudgeImg src='/svg/star.svg' alt='평점' />
+                4.5
+              </Judge>
+              <JudgeHeart>
+                <JudgeImg src='/svg/heart.svg' alt='찜 갯수' />
+                99
+              </JudgeHeart>
+            </JudgeBox>
+            <PlayImage />
+            <PlayTitle>특별한 저녁식사</PlayTitle>
+            <PlayDate>9999.99.99~9999.99.99</PlayDate>
+          </PlayBox>
+        </Plays>
       </FirstPlaysBox>
       <PlaysBox>
         <PlayBoxNav>
