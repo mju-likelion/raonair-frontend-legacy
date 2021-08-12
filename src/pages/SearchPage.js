@@ -12,17 +12,27 @@ const PlaysBox = styled.div`
   margin-bottom: 50px;
   margin-left: auto;
   margin-right: auto;
-  background-color: red;
+  //background-color: red;
+`;
+
+const SearchTerm = styled.p`
+  width: 237px;
+  height: 40px;
+  font-size: 17px;
+  font-weight: normal;
+  margin-top: 27px;
+  margin-bottom: 0;
+  margin-left: 51px;
 `;
 
 const FirstPlaysBox = styled(PlaysBox)`
-  margin-top: 81px;
+  margin-top: 27px;
 `;
 
 const PlayBoxNav = styled.div`
   width: 1182px;
   height: 25px;
-  background-color: gray;
+  //background-color: gray;
   display: flex;
   justify-content: space-between;
 `;
@@ -42,7 +52,7 @@ const PlayBox = styled.div`
   height: 420px;
   width: 240px;
   margin-top: 32px;
-  background-color: blue;
+  //background-color: blue;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -64,7 +74,7 @@ const JudgeBox = styled.div`
   width: 240px;
   display: flex;
   align-items: center;
-  background-color: green;
+  //background-color: green;
 `;
 
 const Judge = styled.div`
@@ -133,6 +143,9 @@ function SearchPage() {
   console.log(searchCondition);
   return (
     <>
+      <SearchTerm>
+        {searchCondition.SearchTerm}에 대한 검색 결과 입니다
+      </SearchTerm>
       <FirstPlaysBox>
         <PlayBoxNav>
           <BoxTitle>진행중인 공연</BoxTitle>
