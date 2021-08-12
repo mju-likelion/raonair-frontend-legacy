@@ -142,6 +142,9 @@ function SearchPage() {
     closed_plays: closedPlays,
   } = searchResult;
 
+  /* eslint-disable */
+  console.log(searchResult && Object.keys(searchResult).length === 0);
+
   const data = [
     {
       param: 'ongoing',
@@ -171,7 +174,7 @@ function SearchPage() {
     <>
       {!searchTerm ? (
         <SearchComponent />
-      ) : (
+      ) : (searchResult && Object.keys(searchResult).length === 0) ? <BoxTitle>검색 결과가 없습니다</BoxTitle> : (
         <>
           <SearchTerm>{searchTerm}에 대한 검색 결과 입니다</SearchTerm>
           {searchCondition &&
