@@ -19,13 +19,7 @@ const SearchTerm = styled.p`
   height: 40px;
   font-size: 17px;
   font-weight: normal;
-  margin-top: 27px;
-  margin-bottom: 0;
-  margin-left: 51px;
-`;
-
-const FirstPlaysBox = styled(PlaysBox)`
-  margin-top: 27px;
+  margin: 27px 0 27px 51px;
 `;
 
 const PlayBoxNav = styled.div`
@@ -128,8 +122,6 @@ function SearchPage() {
             location: `${searchCondition.option}`,
           },
         });
-        // eslint-disable-next-line no-console
-        console.log(searchedResults);
         return setSearchResult(searchedResults);
       } catch (err) {
         return err;
@@ -138,13 +130,33 @@ function SearchPage() {
     callApi();
     setLoaded(true);
   }, []);
-  // eslint-disable-next-line no-console
-  console.log(searchResult);
+
   const {
     ongoing_plays: ongoingPlays,
     tobe_plays: tobePlays,
     closed_plays: closedPlays,
   } = searchResult;
+
+  const data = [
+    {
+      param: 'ongoing',
+      query: `${searchCondition.searchTerm}`,
+      categoryTitle: '진행중인 공연',
+      playData: ongoingPlays,
+    },
+    {
+      param: 'tobe',
+      query: `${searchCondition.searchTerm}`,
+      categoryTitle: '상영 예정인 공연',
+      playData: tobePlays,
+    },
+    {
+      param: 'closed',
+      query: `${searchCondition.searchTerm}`,
+      categoryTitle: '종료된 공연',
+      playData: closedPlays,
+    },
+  ];
 
   if (!loaded) {
     return <div>Loading...</div>;
@@ -153,140 +165,50 @@ function SearchPage() {
   return (
     <>
       <SearchTerm>
-        {searchCondition.SearchTerm}에 대한 검색 결과 입니다
+        {searchCondition.searchTerm}에 대한 검색 결과 입니다
       </SearchTerm>
-      <FirstPlaysBox>
-        <PlayBoxNav>
-          <BoxTitle>진행중인 공연</BoxTitle>
-          <ShowMoreBtn
-            to={`/search/ongoing?query=${searchCondition.searchTerm}`}
-          >
-            더보기
-          </ShowMoreBtn>
-        </PlayBoxNav>
-        <Plays>
-          {ongoingPlays &&
-            ongoingPlays.map(play => {
-              const {
-                id,
-                poster,
-                title,
-                likes,
-                star_avg: starAvg,
-                start_date: startDate,
-                end_data: endDate,
-              } = play;
-              return (
-                <PlayBox key={id}>
-                  <JudgeBox>
-                    <Judge>
-                      <JudgeImg src='/svg/star.svg' alt='평점' />
-                      {starAvg}
-                    </Judge>
-                    <JudgeHeart>
-                      <JudgeImg src='/svg/heart.svg' alt='찜 갯수' />
-                      {likes}
-                    </JudgeHeart>
-                  </JudgeBox>
-                  <PlayImage src={poster} />
-                  <PlayTitle>{title}</PlayTitle>
-                  <PlayDate>{`${startDate}~${endDate || ''}`}</PlayDate>
-                </PlayBox>
-              );
-            })}
-          <PlayBox>
-            <JudgeBox>
-              <Judge>
-                <JudgeImg src='/svg/star.svg' alt='평점' />
-                4.5
-              </Judge>
-              <JudgeHeart>
-                <JudgeImg src='/svg/heart.svg' alt='찜 갯수' />
-                99
-              </JudgeHeart>
-            </JudgeBox>
-            <PlayImage />
-            <PlayTitle>특별한 저녁식사</PlayTitle>
-            <PlayDate>9999.99.99~9999.99.99</PlayDate>
-          </PlayBox>
-        </Plays>
-      </FirstPlaysBox>
-      <PlaysBox>
-        <PlayBoxNav>
-          <BoxTitle>상영 예정인 공연</BoxTitle>
-          <ShowMoreBtn to={`/search/tobe?query=${searchCondition.searchTerm}`}>
-            더보기
-          </ShowMoreBtn>
-        </PlayBoxNav>
-        {tobePlays &&
-          tobePlays.map(play => {
-            const {
-              id,
-              poster,
-              title,
-              likes,
-              star_avg: starAvg,
-              start_date: startDate,
-              end_data: endDate,
-            } = play;
-            return (
-              <PlayBox key={id}>
-                <JudgeBox>
-                  <Judge>
-                    <JudgeImg src='/svg/star.svg' alt='평점' />
-                    {starAvg}
-                  </Judge>
-                  <JudgeHeart>
-                    <JudgeImg src='/svg/heart.svg' alt='찜 갯수' />
-                    {likes}
-                  </JudgeHeart>
-                </JudgeBox>
-                <PlayImage src={poster} />
-                <PlayTitle>{title}</PlayTitle>
-                <PlayDate>{`${startDate}~${endDate || ''}`}</PlayDate>
-              </PlayBox>
-            );
-          })}
-      </PlaysBox>
-      <PlaysBox>
-        <PlayBoxNav>
-          <BoxTitle>종료된 공연</BoxTitle>
-          <ShowMoreBtn
-            to={`/search/closed?query=${searchCondition.searchTerm}`}
-          >
-            더보기
-          </ShowMoreBtn>
-        </PlayBoxNav>
-        {closedPlays &&
-          closedPlays.map(play => {
-            const {
-              id,
-              poster,
-              title,
-              likes,
-              star_avg: starAvg,
-              start_date: startDate,
-              end_data: endDate,
-            } = play;
-            return (
-              <PlayBox key={id}>
-                <JudgeBox>
-                  <Judge>
-                    <JudgeImg src='/svg/star.svg' alt='평점' />
-                    {starAvg}
-                  </Judge>
-                  <JudgeHeart>
-                    <JudgeImg src='/svg/heart.svg' alt='찜 갯수' />
-                    {likes}
-                  </JudgeHeart>
-                </JudgeBox>
-                <PlayImage src={poster} />
-                <PlayTitle>{title}</PlayTitle>
-                <PlayDate>{`${startDate}~${endDate || ''}`}</PlayDate>
-              </PlayBox>
-            );
-          })}
-      </PlaysBox>
+      {searchCondition &&
+        data.map(({ param, query, categoryTitle, playData }) => (
+          <PlaysBox key={param}>
+            <PlayBoxNav>
+              <BoxTitle>{categoryTitle}</BoxTitle>
+              <ShowMoreBtn to={`/search/${param}?query=${query}`}>
+                더보기
+              </ShowMoreBtn>
+            </PlayBoxNav>
+            <Plays>
+              {playData &&
+                playData.map(play => {
+                  const {
+                    id,
+                    poster,
+                    title,
+                    likes,
+                    star_avg: starAvg,
+                    start_date: startDate,
+                    end_data: endDate,
+                  } = play;
+                  return (
+                    <PlayBox key={id}>
+                      <JudgeBox>
+                        <Judge>
+                          <JudgeImg src='/svg/star.svg' alt='평점' />
+                          {starAvg}
+                        </Judge>
+                        <JudgeHeart>
+                          <JudgeImg src='/svg/heart.svg' alt='찜 갯수' />
+                          {likes}
+                        </JudgeHeart>
+                      </JudgeBox>
+                      <PlayImage src={poster} />
+                      <PlayTitle>{title}</PlayTitle>
+                      <PlayDate>{`${startDate}~${endDate || ''}`}</PlayDate>
+                    </PlayBox>
+                  );
+                })}
+            </Plays>
+          </PlaysBox>
+        ))}
     </>
   );
 }
