@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
+import SearchComponent from '../components/SearchComponent';
 import { searchConditionState } from '../globalState/search';
 
 const PlaysBox = styled.div`
@@ -108,6 +109,8 @@ function SearchPage() {
   const [searchCondition] = useRecoilState(searchConditionState);
   const [searchResult, setSearchResult] = useState({});
   const [loaded, setLoaded] = useState(true);
+  const url = new URLSearchParams(useLocation().search);
+  const searchTerm = url.get('query');
   useEffect(() => {
     const callApi = async () => {
       setLoaded(false);
@@ -120,7 +123,7 @@ function SearchPage() {
           method: 'get',
           url: `${process.env.REACT_APP_SERVER_ORIGIN}/api/search/play`,
           params: {
-            query: `${searchCondition.searchTerm}`,
+            query: `${searchTerm}`,
             location: `${searchCondition.option}`,
           },
         });
@@ -142,19 +145,19 @@ function SearchPage() {
   const data = [
     {
       param: 'ongoing',
-      query: `${searchCondition.searchTerm}`,
+      query: searchTerm,
       categoryTitle: '진행중인 공연',
       playData: ongoingPlays,
     },
     {
       param: 'tobe',
-      query: `${searchCondition.searchTerm}`,
+      query: searchTerm,
       categoryTitle: '상영 예정인 공연',
       playData: tobePlays,
     },
     {
       param: 'closed',
-      query: `${searchCondition.searchTerm}`,
+      query: searchTerm,
       categoryTitle: '종료된 공연',
       playData: closedPlays,
     },
@@ -163,60 +166,62 @@ function SearchPage() {
   if (!loaded) {
     return <div>Loading...</div>;
   }
-  /*eslint-disable*/
+
   return (
     <>
-      <SearchTerm>
-        {searchCondition.searchTerm}에 대한 검색 결과 입니다
-      </SearchTerm>
-      {searchCondition &&
-        data.map(({ param, query, categoryTitle, playData }) => (
-          <PlaysBox key={param}>
-            <>
-              <PlayBoxNav>
-                <BoxTitle>{categoryTitle}</BoxTitle>
-                <ShowMoreBtn to={`/search/${param}?query=${query}`}>
-                  더보기
-                </ShowMoreBtn>
-              </PlayBoxNav>
-              <Plays>
-                {playData &&
-                playData.map(play => {
-                  const {
-                    id,
-                    poster,
-                    title,
-                    likes,
-                    star_avg: starAvg,
-                    start_date: startDate,
-                    end_data: endDate,
-                  } = play;
-                  return (
-                      <PlayBox key={id} to={`/play/${id}`}>
-                        <JudgeBox>
-                          <Judge>
-                            <JudgeImg src='/svg/star.svg' alt='평점' />
-                            {starAvg}
-                          </Judge>
-                          <JudgeHeart>
-                            <JudgeImg src='/svg/heart.svg' alt='찜 갯수' />
-                            {likes}
-                          </JudgeHeart>
-                        </JudgeBox>
-                        <PlayImage src={poster} />
-                        <PlayTitle>
-                          {title}
-                        </PlayTitle>
-                        <PlayDate>
-                          {`${startDate} ~ ${endDate || ''}`}
-                        </PlayDate>
-                      </PlayBox>
-                  );
-                })}
-              </Plays>
-            </>
-          </PlaysBox>
-        ))}
+      {!searchTerm ? (
+        <SearchComponent />
+      ) : (
+        <>
+          <SearchTerm>{searchTerm}에 대한 검색 결과 입니다</SearchTerm>
+          {searchCondition &&
+            data.map(({ param, query, categoryTitle, playData }) => (
+              <PlaysBox key={param}>
+                <>
+                  <PlayBoxNav>
+                    <BoxTitle>{categoryTitle}</BoxTitle>
+                    <ShowMoreBtn to={`/search/${param}?query=${query}`}>
+                      더보기
+                    </ShowMoreBtn>
+                  </PlayBoxNav>
+                  <Plays>
+                    {playData &&
+                      playData.map(play => {
+                        const {
+                          id,
+                          poster,
+                          title,
+                          likes,
+                          star_avg: starAvg,
+                          start_date: startDate,
+                          end_data: endDate,
+                        } = play;
+                        return (
+                          <PlayBox key={id} to={`/play/${id}`}>
+                            <JudgeBox>
+                              <Judge>
+                                <JudgeImg src='/svg/star.svg' alt='평점' />
+                                {starAvg}
+                              </Judge>
+                              <JudgeHeart>
+                                <JudgeImg src='/svg/heart.svg' alt='찜 갯수' />
+                                {likes}
+                              </JudgeHeart>
+                            </JudgeBox>
+                            <PlayImage src={poster} />
+                            <PlayTitle>{title}</PlayTitle>
+                            <PlayDate>
+                              {`${startDate} ~ ${endDate || ''}`}
+                            </PlayDate>
+                          </PlayBox>
+                        );
+                      })}
+                  </Plays>
+                </>
+              </PlaysBox>
+            ))}
+        </>
+      )}
     </>
   );
 }

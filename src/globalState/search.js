@@ -6,7 +6,7 @@ export const searchConditionState = atom({
   key: `${searchConditionStateKey}`,
   default: {
     target: 'play',
-    searchTerm: '',
+    // searchTerm: '',
     option: '',
   },
 });

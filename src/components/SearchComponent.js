@@ -129,6 +129,7 @@ const SearchComponent = () => {
   const [redirect, setRedirect] = useState(false);
   const [searchCondition, setSearchCondition] =
     useRecoilState(searchConditionState);
+  const [query, setQuery] = useState('');
 
   useEffect(() => {
     const getSearchOptions = async () => {
@@ -164,7 +165,11 @@ const SearchComponent = () => {
 
   const handleChange = useCallback(
     ({ target: { value, name } }) => {
-      setSearchCondition({ ...searchCondition, [name]: value });
+      if (name === 'searchTerm') {
+        setQuery(value);
+      } else {
+        setSearchCondition({ ...searchCondition, [name]: value });
+      }
     },
     [searchCondition],
   );
@@ -193,9 +198,7 @@ const SearchComponent = () => {
             <SearchTarget onClick={handleClick}>극단</SearchTarget>
           </HighlightBoxTroupe>
         </SearchTargetBox>
-        {redirect && (
-          <Redirect to={`/search?query=${searchCondition.searchTerm}`} />
-        )}
+        {redirect && <Redirect to={`/search?query=${query}`} />}
         <OptionBox>
           {selectedTarget === 'play' ? (
             <SearchOption>
