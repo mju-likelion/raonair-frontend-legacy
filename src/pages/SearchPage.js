@@ -124,7 +124,8 @@ function SearchPage() {
           method: 'get',
           url: `${process.env.REACT_APP_SERVER_ORIGIN}/api/search/play`,
           params: {
-            query: '째',
+            query: `${searchCondition.searchTerm}`,
+            location: `${searchCondition.option}`,
           },
         });
         // eslint-disable-next-line no-console
