@@ -19,7 +19,7 @@ const SearchTerm = styled.p`
   height: 40px;
   font-size: 17px;
   font-weight: normal;
-  margin: 27px 0 27px 51px;
+  margin: 29px 0 10px 53px;
 `;
 
 const PlayBoxNav = styled.div`
@@ -38,6 +38,7 @@ const BoxTitle = styled.h4`
 const ShowMoreBtn = styled(NavLink)`
   font-size: 20px;
   color: #49b0ff;
+  margin-right: 30px;
 `;
 
 const PlayBox = styled.div`
@@ -81,6 +82,7 @@ const JudgeHeart = styled(Judge)`
 const JudgeImg = styled.img`
   height: 20px;
   width: 21.86px;
+  margin-right: 5px;
 `;
 
 const PlayImage = styled.img`
@@ -91,7 +93,7 @@ const PlayImage = styled.img`
 
 const PlayTitle = styled.h4`
   font-size: 20px;
-  margin: 0;
+  margin: 0 4px 5px 0;
 `;
 
 const PlayDate = styled.p`
@@ -161,7 +163,7 @@ function SearchPage() {
   if (!loaded) {
     return <div>Loading...</div>;
   }
-
+  /*eslint-disable*/
   return (
     <>
       <SearchTerm>
@@ -193,7 +195,7 @@ function SearchPage() {
                       <JudgeBox>
                         <Judge>
                           <JudgeImg src='/svg/star.svg' alt='평점' />
-                          {starAvg}
+                           {starAvg}
                         </Judge>
                         <JudgeHeart>
                           <JudgeImg src='/svg/heart.svg' alt='찜 갯수' />
@@ -201,8 +203,12 @@ function SearchPage() {
                         </JudgeHeart>
                       </JudgeBox>
                       <PlayImage src={poster} />
-                      <PlayTitle>{title}</PlayTitle>
-                      <PlayDate>{`${startDate}~${endDate || ''}`}</PlayDate>
+                      <PlayTitle>
+                        {title}
+                      </PlayTitle>
+                      <PlayDate>
+                        {`${startDate} ~ ${endDate || ''}`}
+                      </PlayDate>
                     </PlayBox>
                   );
                 })}
