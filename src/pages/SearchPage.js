@@ -41,7 +41,7 @@ const ShowMoreBtn = styled(NavLink)`
   margin-right: 30px;
 `;
 
-const PlayBox = styled.div`
+const PlayBox = styled(NavLink)`
   height: 420px;
   width: 240px;
   margin-top: 32px;
@@ -172,14 +172,15 @@ function SearchPage() {
       {searchCondition &&
         data.map(({ param, query, categoryTitle, playData }) => (
           <PlaysBox key={param}>
-            <PlayBoxNav>
-              <BoxTitle>{categoryTitle}</BoxTitle>
-              <ShowMoreBtn to={`/search/${param}?query=${query}`}>
-                더보기
-              </ShowMoreBtn>
-            </PlayBoxNav>
-            <Plays>
-              {playData &&
+            <>
+              <PlayBoxNav>
+                <BoxTitle>{categoryTitle}</BoxTitle>
+                <ShowMoreBtn to={`/search/${param}?query=${query}`}>
+                  더보기
+                </ShowMoreBtn>
+              </PlayBoxNav>
+              <Plays>
+                {playData &&
                 playData.map(play => {
                   const {
                     id,
@@ -191,28 +192,29 @@ function SearchPage() {
                     end_data: endDate,
                   } = play;
                   return (
-                    <PlayBox key={id}>
-                      <JudgeBox>
-                        <Judge>
-                          <JudgeImg src='/svg/star.svg' alt='평점' />
-                           {starAvg}
-                        </Judge>
-                        <JudgeHeart>
-                          <JudgeImg src='/svg/heart.svg' alt='찜 갯수' />
-                          {likes}
-                        </JudgeHeart>
-                      </JudgeBox>
-                      <PlayImage src={poster} />
-                      <PlayTitle>
-                        {title}
-                      </PlayTitle>
-                      <PlayDate>
-                        {`${startDate} ~ ${endDate || ''}`}
-                      </PlayDate>
-                    </PlayBox>
+                      <PlayBox key={id} to={`/play/${id}`}>
+                        <JudgeBox>
+                          <Judge>
+                            <JudgeImg src='/svg/star.svg' alt='평점' />
+                            {starAvg}
+                          </Judge>
+                          <JudgeHeart>
+                            <JudgeImg src='/svg/heart.svg' alt='찜 갯수' />
+                            {likes}
+                          </JudgeHeart>
+                        </JudgeBox>
+                        <PlayImage src={poster} />
+                        <PlayTitle>
+                          {title}
+                        </PlayTitle>
+                        <PlayDate>
+                          {`${startDate} ~ ${endDate || ''}`}
+                        </PlayDate>
+                      </PlayBox>
                   );
                 })}
-            </Plays>
+              </Plays>
+            </>
           </PlaysBox>
         ))}
     </>
