@@ -1,7 +1,9 @@
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+// import { useParams } from 'react-router';
 
 const DivideLine = styled.hr`
   width: 1000px;
@@ -251,11 +253,11 @@ const ClosedPlay = styled.div`
 // 로고에 따른 스타일 변경 필요
 // 좋아요 기능 구현 필요
 // 슬라이드 기능 구현 필요
-const TroupePage = () => {
+const TroupePage = ({ match }) => {
   const [troupe, setTroupe] = useState(null);
   const [loading, setLoading] = useState(true);
   // 임시 극단 id값, 추후 props에서 받아온 값으로 수정해야함
-  const troupeId = 1;
+  // const troupeId = 1;
 
   // api 호출
   useEffect(() => {
@@ -264,7 +266,11 @@ const TroupePage = () => {
       try {
         const response = await axios.get(
           // `http://127.0.0.1:8000/api/troupe/${troupeId}`,
-          `http://3.38.8.220/api/troupe/${troupeId}`,
+          `http://3.38.8.220/api/troupe/${match.params.id}`,
+          // 'http://3.38.8.220/api/troupe',
+          // {
+          //   params: { query: id },
+          // },
         );
         setTroupe(response.data.data);
       } catch (e) {
@@ -281,12 +287,10 @@ const TroupePage = () => {
   if (!troupe) {
     return null;
   }
-
   return (
     <>
       {/* api 호출 테스트 */}
       {/* {troupe && <textarea rows={10} value={JSON.stringify(troupe, null, 2)} />} */}
-
       <TitleBox>
         <div className='title'>
           <p>{troupe.troupe.name}</p>
@@ -368,6 +372,16 @@ const TroupePage = () => {
       </ClosedPlay>
     </>
   );
+};
+
+TroupePage.propTypes = {
+  match: PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.bool,
+      PropTypes.objectOf(PropTypes.string),
+    ]),
+  ).isRequired,
 };
 
 export default TroupePage;

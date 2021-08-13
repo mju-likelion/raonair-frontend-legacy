@@ -35,9 +35,7 @@ function App() {
           <Route path='/play/:id'>
             <PlayPage />
           </Route>
-          <Route path='/troupe/:id'>
-            <TroupePage />
-          </Route>
+          <Route path='/troupe/:id' component={TroupePage} />
           <Route path='/auth/password-find'>
             <PasswordFindPage />
           </Route>
