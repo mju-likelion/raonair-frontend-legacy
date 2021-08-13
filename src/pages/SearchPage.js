@@ -113,13 +113,16 @@ function SearchPage ({ location }) {
     troupe_normal: troupeNormal,
     troupe_student: troupeStudent,
   } = searchResult;
-
+  let totalTroupe = [];
+  if(troupeNormal) {
+    totalTroupe = troupeNormal.concat(troupeStudent);
+  }
   const data = [
     {
       param: `${searchTarget.target === 'play' ? 'ongoing' : 'troupe/detail'}`,
       query: searchCondition.query,
       categoryTitle: `${searchTarget.target === 'play' ? '진행중인 공연' : '모든 극단'}`,
-      playData: searchTarget.target === 'play' ? ongoingPlays : troupeAll,
+      playData: searchTarget.target === 'play' ? ongoingPlays : totalTroupe,
     },
     {
       param: `${searchTarget.target === 'play' ? 'tobe' : 'troupe/detail'}`,
