@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 // import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
-import PlayComponent from '../components/PlayComponent';
+import PlayComponent, {PlayBox} from '../components/PlayComponent';
 import SearchComponent from '../components/SearchComponent';
 // import { searchTargetState } from '../globalState/search';
 
@@ -143,7 +143,11 @@ function SearchPage ({ location }) {
                   <Plays>
                     {playData &&
                       playData.map(play => {
-                        return <PlayComponent key={play.id} play={play} />;
+                        return (
+                          <PlayBox key={play.id} to={`/play/${play.id}`}>
+                            <PlayComponent play={play} />
+                          </PlayBox>
+                        );
                       })}
                   </Plays>
                 </>

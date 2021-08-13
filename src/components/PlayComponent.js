@@ -10,7 +10,8 @@ const PlayBox = styled(NavLink)`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  margin-right: 74px;
+  margin-right: 37px;
+  margin-left: 37px;
   box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
   border-radius: 6px;
 `;
@@ -59,7 +60,6 @@ const PlayDate = styled.p`
 
 const PlayComponent = ({ play }) => {
   const {
-    id,
     poster,
     title,
     likes,
@@ -68,7 +68,7 @@ const PlayComponent = ({ play }) => {
     end_date: endDate,
   } = play;
   return (
-    <PlayBox to={`/play/${id}`}>
+    <>
       <JudgeBox>
         <Judge>
           <JudgeImg src='/svg/star.svg' alt='평점' />
@@ -82,7 +82,7 @@ const PlayComponent = ({ play }) => {
       <PlayImage src={poster} />
       <PlayTitle>{title}</PlayTitle>
       <PlayDate>{`${startDate} ~ ${endDate || ''}`}</PlayDate>
-    </PlayBox>
+    </>
   );
 };
 
