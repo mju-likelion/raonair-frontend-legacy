@@ -2,6 +2,14 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
+const DivideLine = styled.hr`
+  width: 1000px;
+  background: #bfbfbf;
+  height: 1px;
+  margin: 75px auto;
+  /* border: 0; */
+`;
+
 const TitleBox = styled.div`
   height: 509px;
   width: 100%;
@@ -72,7 +80,7 @@ const StaffBox = styled.div`
     display: flex;
     justify-content: center;
     /* 오버플로우에 따른 슬라이드 구현하기 */
-    overflow-x: scroll;
+    /* overflow-x: scroll; */
     p {
       text-align: center;
     }
@@ -87,8 +95,38 @@ const StaffBox = styled.div`
     }
   }
 `;
+
+const OngoingBox = styled.div`
+  width: 1150px;
+  /* height: 276px; */
+  margin: 0 auto;
+  font-weight: bold;
+  p {
+    font-weight: bold;
+  }
+  .ongoingHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    p {
+      font-size: 36px;
+    }
+  }
+  .ongoingHeader::before,
+  .ongoingHeader::after {
+    content: '';
+    background: #529acc;
+    width: 150px;
+    height: 5px;
+    font-size: 0px;
+    line-height: 0px;
+    margin: 0 19px;
+  }
+`;
+
 // 로고에 따른 스타일 변경 필요
 // 좋아요 기능 구현 필요
+// 슬라이드 기능 구현 필요
 const TroupePage = () => {
   const [troupe, setTroupe] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -155,6 +193,19 @@ const TroupePage = () => {
           ))}
         </div>
       </StaffBox>
+      <DivideLine />
+      <OngoingBox>
+        <div className='ongoingHeader'>
+          <p>진행 중인 공연</p>
+        </div>
+        {troupe.play.ongoing_play.map(ongoing => (
+          <div key={ongoing.id}>
+            <p>{ongoing.title}</p>
+            <p>{ongoing.poster}</p>
+            <p>{ongoing.title}</p>
+          </div>
+        ))}
+      </OngoingBox>
     </>
   );
 };
