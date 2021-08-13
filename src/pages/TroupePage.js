@@ -13,13 +13,6 @@ const TitleBox = styled.div`
   }
   .titleButtons {
     margin-right: 50px;
-    img {
-      float: right;
-      cursor: pointer;
-    }
-    img:hover {
-      background-image: url('/svg/like_on.svg');
-    }
     p {
       font-weight: bold;
       cursor: pointer;
@@ -43,11 +36,9 @@ const TitleBox = styled.div`
 `;
 
 // 로고에 따른 스타일 변경 필요
-// 좋아요 기능 구현 필요
-const TroupePage = () => {
+const TroupePage = id => {
   const [troupe, setTroupe] = useState(null);
   const [loading, setLoading] = useState(true);
-  // const [likeImg, setLikeImg] = useState('/svg/like_off.svg');
   // 임시 극단 id값, 추후 props에서 받아온 값으로 수정해야함
   const troupeId = 2;
 
@@ -66,7 +57,7 @@ const TroupePage = () => {
       setLoading(false);
     };
     fetchData();
-  }, []);
+  }, [id]);
 
   if (loading) {
     return <h1>로딩중</h1>;
@@ -74,12 +65,6 @@ const TroupePage = () => {
   if (!troupe) {
     return null;
   }
-  // 좋아요 여부 판단
-  // if (troupe.context.like_check) {
-  //   setLikeImg('/svg/like_on.svg');
-  // } else {
-  //   setLikeImg('/svg/like_off.svg');
-  // }
 
   return (
     <>
@@ -91,8 +76,12 @@ const TroupePage = () => {
           <p>{troupe.troupe.name}</p>
         </div>
         <div className='titleButtons'>
+          {/*
+            클릭하면 정보 수정페이지로 넘어가게 현재 미구현
+            찜하기 버튼은 이미지로 수정 필요
+           */}
           <p>잘못된 정보가 있나요?</p>
-          <img src='/svg/like_off.svg' alt='좋아요버튼' />
+          <p>찜하기버튼</p>
         </div>
       </TitleBox>
     </>
