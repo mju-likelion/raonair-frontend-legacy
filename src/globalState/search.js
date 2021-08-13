@@ -1,20 +1,20 @@
 import { atom, selector } from 'recoil';
 
-const searchConditionStateKey = 'SEARCH/SEARCH_CONDITION';
+const searchTargetKey = 'SEARCH/SEARCH_TARGET';
 
-export const searchConditionState = atom({
-  key: `${searchConditionStateKey}`,
+export const searchTargetState = atom({
+  key: `${searchTargetKey}`,
   default: {
     target: 'play',
-    searchTerm: '',
+    // searchTerm: '',
     option: '',
   },
 });
 
-export const getSearchOption = selector({
+export const getSearchTargetState = selector({
   key: 'search/getSearchOption',
   get: ({ get }) => {
-    return get(searchConditionState);
+    return get(searchTargetState);
   },
 });
 

@@ -26,12 +26,8 @@ function App() {
           {/* /search/ongoing?query=검색어 현재 상영중인 연극 검색 결과 페이지 */}
           {/* /search/tobe?query=검색어 상영 예정 연극 검색 결과 페이지 */}
           {/* /search/closed?query=검색어 상영 종료된 연극 검색 결과 페이지 */}
-          <Route path='/search/:type'>
-            <SearchResultPage />
-          </Route>
-          <Route path='/search'>
-            <SearchPage />
-          </Route>
+          <Route path='/search/:type' component={SearchResultPage} />
+          <Route path='/search' component={SearchPage} />
           <Route path='/play/:id'>
             <PlayPage />
           </Route>
