@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const DivideLine = styled.hr`
@@ -13,6 +14,7 @@ const DivideLine = styled.hr`
 const PlayBox = styled.div`
   width: 150px;
   height: 283px;
+  cursor: pointer;
 `;
 
 const PosterImg = styled.img`
@@ -104,8 +106,11 @@ const StaffBox = styled.div`
     img {
       width: 120px;
       height: 120px;
+      min-width: 120px;
+      min-height: 120px;
       border-radius: 100%;
       background: #f2f2f2;
+      background-image: url(/svg/people_default.svg);
     }
   }
 `;
@@ -243,7 +248,6 @@ const ClosedPlay = styled.div`
 const TroupePage = () => {
   const [troupe, setTroupe] = useState(null);
   const [loading, setLoading] = useState(true);
-  // const [likeImg, setLikeImg] = useState('/svg/like_off.svg');
   // 임시 극단 id값, 추후 props에서 받아온 값으로 수정해야함
   const troupeId = 1;
 
@@ -270,12 +274,6 @@ const TroupePage = () => {
   if (!troupe) {
     return null;
   }
-  // 좋아요 여부 판단
-  // if (troupe.context.like_check) {
-  //   setLikeImg('/svg/like_on.svg');
-  // } else {
-  //   setLikeImg('/svg/like_off.svg');
-  // }
 
   return (
     <>
@@ -298,8 +296,7 @@ const TroupePage = () => {
         <div className='staffList'>
           {troupe.team.map(team => (
             <div className='staffItem' key={team.name}>
-              {/* <img src={team.photo} alt='인물 이미지' /> */}
-              <img src='/svg/people_default.svg' alt='인물 이미지' />
+              <img src={team.photo} alt='' />
               <p>{team.name}</p>
             </div>
           ))}
@@ -312,17 +309,18 @@ const TroupePage = () => {
         </div>
         <div className='ongoingPlayList'>
           {troupe.play.ongoing_play.map(ongoing => (
-            <div className='ongoingPlayItem' key={ongoing.id}>
-              {/* <img src='/svg/poster_default.svg' alt='포스터 이미지' /> */}
-              <PosterImg src={ongoing.poster} alt='포스터 이미지' />
-              <div className='ongoingPlayInfo'>
-                <p className='ongoingTitle'>{ongoing.title}</p>
-                <p className='ongoingDate'>
-                  {ongoing.start_date} ~ {ongoing.end_date}
-                </p>
-                <p className='ongoingLink'>자세히 &gt;</p>
+            <Link to={`/play/${ongoing.id}`}>
+              <div className='ongoingPlayItem' key={ongoing.id}>
+                <PosterImg src={ongoing.poster} alt='' />
+                <div className='ongoingPlayInfo'>
+                  <p className='ongoingTitle'>{ongoing.title}</p>
+                  <p className='ongoingDate'>
+                    {ongoing.start_date} ~ {ongoing.end_date}
+                  </p>
+                  <p className='ongoingLink'>자세히 &gt;</p>
+                </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </OngoingBox>
@@ -333,14 +331,15 @@ const TroupePage = () => {
         </div>
         <div className='tobePlayList'>
           {troupe.play.tobe_play.map(tobe => (
-            <PlayBox key={tobe.id}>
-              {/* <img src='/svg/poster_default.svg' alt='포스터 이미지' /> */}
-              <PosterImg src={tobe.poster} alt='포스터 이미지' />
-              <div className='tobePlayInfo'>
-                <p>{tobe.title}</p>
-                <p>{tobe.start_date} 예정</p>
-              </div>
-            </PlayBox>
+            <Link to={`/play/${tobe.id}`}>
+              <PlayBox key={tobe.id}>
+                <PosterImg src={tobe.poster} alt='포스터 이미지' />
+                <div className='tobePlayInfo'>
+                  <p>{tobe.title}</p>
+                  <p>{tobe.start_date} 예정</p>
+                </div>
+              </PlayBox>
+            </Link>
           ))}
         </div>
       </TobePlay>
@@ -351,10 +350,12 @@ const TroupePage = () => {
         </div>
         <div className='closedList'>
           {troupe.play.closed_play.map(closed => (
-            <PlayBox key={closed.id}>
-              <PosterImg src={closed.poster} alt='포스터 이미지' />
-              <p>{closed.title}</p>
-            </PlayBox>
+            <Link to={`/play/${closed.id}`}>
+              <PlayBox key={closed.id}>
+                <PosterImg src={closed.poster} alt='포스터 이미지' />
+                <p>{closed.title}</p>
+              </PlayBox>
+            </Link>
           ))}
         </div>
       </ClosedPlay>
