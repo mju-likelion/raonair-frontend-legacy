@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
@@ -51,7 +52,11 @@ const SignupModal = ({ onClose }) => {
       name: '',
       nickName: '',
     },
-    onSubmit: () => {},
+    onSubmit: () => {
+      axios.post('api/auth/signup', {
+        email: 'ddd@adfmasdf',
+      });
+    },
   });
 
   return (
