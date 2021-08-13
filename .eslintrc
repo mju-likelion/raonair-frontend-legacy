@@ -4,7 +4,6 @@
     "plugin:prettier/recommended"
   ],
   "plugins": [
-    "prettier",
     "react-hooks"
   ],
   "env": {
@@ -33,6 +32,7 @@
   "rules": {
     "import/no-anonymouse-default-export": "off",
     "import/no-extraneous-dependencies": "off",
+    "prettier/prettier": ["off", {"endOfLine":  "auto"}],
     "import/order": [
       "error",
       {
@@ -55,7 +55,8 @@
       "error",
       2,
       {
-        "SwitchCase": 1
+        "SwitchCase": 1,
+        "ignoredNodes": ["JSXElement *"]
       }
     ],
     "jsx-a11y/anchor-is-valid": "off",
