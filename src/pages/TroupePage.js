@@ -147,11 +147,17 @@ const OngoingBox = styled.div`
   }
   .ongoingPlayItem {
     display: flex;
-    .ongoingPlayInfo {
-      margin-left: 45px;
-    }
     p {
       margin: 0;
+    }
+    img {
+      width: 260px;
+      height: 365px;
+      background-image: url(/svg/poster_default.svg);
+      background-size: cover;
+    }
+    .ongoingPlayInfo {
+      margin-left: 45px;
     }
     .ongoingTitle {
       font-size: 48px;
@@ -257,7 +263,8 @@ const TroupePage = () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/troupe/${troupeId}`,
+          // `http://127.0.0.1:8000/api/troupe/${troupeId}`,
+          `http://3.38.8.220/api/troupe/${troupeId}`,
         );
         setTroupe(response.data.data);
       } catch (e) {
@@ -309,9 +316,9 @@ const TroupePage = () => {
         </div>
         <div className='ongoingPlayList'>
           {troupe.play.ongoing_play.map(ongoing => (
-            <Link to={`/play/${ongoing.id}`}>
-              <div className='ongoingPlayItem' key={ongoing.id}>
-                <PosterImg src={ongoing.poster} alt='' />
+            <Link to={`/play/${ongoing.id}`} key={ongoing.id}>
+              <div className='ongoingPlayItem'>
+                <img src={ongoing.poster} alt='' />
                 <div className='ongoingPlayInfo'>
                   <p className='ongoingTitle'>{ongoing.title}</p>
                   <p className='ongoingDate'>
@@ -331,8 +338,8 @@ const TroupePage = () => {
         </div>
         <div className='tobePlayList'>
           {troupe.play.tobe_play.map(tobe => (
-            <Link to={`/play/${tobe.id}`}>
-              <PlayBox key={tobe.id}>
+            <Link to={`/play/${tobe.id}`} key={tobe.id}>
+              <PlayBox>
                 <PosterImg src={tobe.poster} alt='포스터 이미지' />
                 <div className='tobePlayInfo'>
                   <p>{tobe.title}</p>
@@ -350,8 +357,8 @@ const TroupePage = () => {
         </div>
         <div className='closedList'>
           {troupe.play.closed_play.map(closed => (
-            <Link to={`/play/${closed.id}`}>
-              <PlayBox key={closed.id}>
+            <Link to={`/play/${closed.id}`} key={closed.id}>
+              <PlayBox>
                 <PosterImg src={closed.poster} alt='포스터 이미지' />
                 <p>{closed.title}</p>
               </PlayBox>
