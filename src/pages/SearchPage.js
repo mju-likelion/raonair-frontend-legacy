@@ -196,7 +196,7 @@ function SearchPage ({ location }) {
                       <BoxTitle>
                         {categoryTitle}
                       </BoxTitle>
-                      <ShowMoreBtn to={`/search/${param}?query${query}`}>
+                      <ShowMoreBtn to={`/search/${param}?query=${query}`}>
                         더보기
                       </ShowMoreBtn>
                     </PlayBoxNav>
