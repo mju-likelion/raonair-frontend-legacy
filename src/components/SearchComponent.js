@@ -161,7 +161,7 @@ const SearchComponent = () => {
       },
     }) => {
       const target = innerText === '연극' ? 'play' : 'troupe';
-      setSearchTarget(target);
+      setSearchTarget({...searchTarget, target});
       setSelectedTarget(target);
     },
     [selectedTarget, searchTarget],

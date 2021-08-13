@@ -8,6 +8,7 @@ import styled from 'styled-components';
 
 import PlayComponent, {PlayBox} from '../components/PlayComponent';
 import SearchComponent from '../components/SearchComponent';
+import TroupeCompoennt from '../components/TroupeComponent';
 import { searchTargetState } from '../globalState/search';
 
 const PlaysBox = styled.div`
@@ -16,6 +17,17 @@ const PlaysBox = styled.div`
   margin-bottom: 50px;
   margin-left: auto;
   margin-right: auto;
+`;
+
+const TroupeBox = styled(PlaysBox)`
+  height: 284px;
+  margin-bottom: 25px;
+`;
+
+const Troupes = styled.div`
+  height: 259px;
+  width: 240px;
+  display: flex;
 `;
 
 const SearchTerm = styled.p`
@@ -58,8 +70,6 @@ function SearchPage ({ location }) {
   const [searchTarget] = useRecoilState(searchTargetState);
   const [searchResult, setSearchResult] = useState({});
   const [loaded, setLoaded] = useState(true);
-  console.log(searchTarget);
-  console.log(location);
   const searchCondition = qs.parse(location.search, {
     ignoreQueryPrefix: true,
   });
@@ -81,6 +91,7 @@ function SearchPage ({ location }) {
             : {...(searchCondition.type) ? {type: searchCondition.type} : {}}),
         },
       });
+      console.log(searchedResults);
       return setSearchResult(searchedResults);
     } catch (err) {
       return err;
@@ -97,30 +108,47 @@ function SearchPage ({ location }) {
     closed_plays: closedPlays,
   } = searchResult;
 
+  const {
+    troupe_all: troupeAll,
+    troupe_normal: troupeNormal,
+    troupe_student: troupeStudent,
+  } = searchResult;
+
   const data = [
     {
-      param: 'ongoing',
+      param: `${searchTarget.target === 'play' ? 'ongoing' : 'troupe/detail'}`,
       query: searchCondition.query,
-      categoryTitle: '진행중인 공연',
-      playData: ongoingPlays,
+      categoryTitle: `${searchTarget.target === 'play' ? '진행중인 공연' : '모든 극단'}`,
+      playData: searchTarget.target === 'play' ? ongoingPlays : troupeAll,
     },
     {
-      param: 'tobe',
+      param: `${searchTarget.target === 'play' ? 'tobe' : 'troupe/detail'}`,
       query: searchCondition.query,
-      categoryTitle: '상영 예정인 공연',
-      playData: tobePlays,
+      categoryTitle: `${searchTarget.target === 'play' ? '상영 예정인 공연' : '일반 극단'}`,
+      playData: searchTarget.target === 'play' ? tobePlays : troupeNormal,
     },
     {
-      param: 'closed',
+      param: `${searchTarget.target === 'play' ? 'closed' : 'troupe/detail'}`,
       query: searchCondition.query,
-      categoryTitle: '종료된 공연',
-      playData: closedPlays,
+      categoryTitle: `${searchTarget.target === 'play' ? '종료된 공연' : '학생 극단'}`,
+      playData: searchTarget.target ? closedPlays : troupeStudent,
     },
   ];
+
 
   if (!loaded) {
     return <div>Loading...</div>;
   }
+
+  const a = [{
+    id: 20,
+    name: 'a',
+    logo: '#',
+  }, {
+    id: 30,
+    name: 'a',
+    logo: '#',
+  }];
 
   return (
     <>
@@ -134,7 +162,7 @@ function SearchPage ({ location }) {
           <SearchTerm>
             {searchCondition.query}에 대한 검색 결과 입니다
           </SearchTerm>
-          {searchCondition &&
+          {searchCondition && searchTarget.target === 'play' &&
             data.map(({ param, query, categoryTitle, playData }) => (
               <PlaysBox key={categoryTitle}>
                 <>
@@ -157,6 +185,26 @@ function SearchPage ({ location }) {
                 </>
               </PlaysBox>
             ))}
+            {searchCondition && searchTarget.target === 'troupe' &&
+              data.map(({param, query, categoryTitle, playData}) => (
+                <TroupeBox key={categoryTitle}>
+                  <>
+                    <PlayBoxNav>
+                      <BoxTitle>
+                        {categoryTitle}
+                      </BoxTitle>
+                      <ShowMoreBtn to={`/search/${param}?query${query}`}>
+                        더보기
+                      </ShowMoreBtn>
+                    </PlayBoxNav>
+                    <Troupes>
+                      {playData &&
+                      playData.map((troupe) => <TroupeCompoennt key={troupe.id} troupe={troupe} />)}
+                      {/*{playData && a.map((troupe) => <TroupeCompoennt key={troupe.id} troupe={troupe} />)}*/}
+                    </Troupes>
+                  </>
+                </TroupeBox>
+              ))}
           </>
         )}
     </>
