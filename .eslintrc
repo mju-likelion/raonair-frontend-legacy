@@ -4,7 +4,6 @@
     "plugin:prettier/recommended"
   ],
   "plugins": [
-    "prettier",
     "react-hooks"
   ],
   "env": {
@@ -56,7 +55,8 @@
       "error",
       2,
       {
-        "SwitchCase": 1
+        "SwitchCase": 1,
+        "ignoredNodes": ["JSXElement *"]
       }
     ],
     "jsx-a11y/anchor-is-valid": "off",
