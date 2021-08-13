@@ -10,6 +10,20 @@ const DivideLine = styled.hr`
   /* border: 0; */
 `;
 
+const PlayBox = styled.div`
+  width: 150px;
+  height: 283px;
+`;
+
+const PosterImg = styled.img`
+  width: 150px;
+  height: 210px;
+  min-width: 150px;
+  min-height: 210px;
+  border-radius: 6px;
+  background-image: url('/svg/poster_default.svg');
+`;
+
 const TitleBox = styled.div`
   height: 509px;
   width: 100%;
@@ -131,10 +145,6 @@ const OngoingBox = styled.div`
     .ongoingPlayInfo {
       margin-left: 45px;
     }
-    img {
-      width: 250px;
-      height: 365px;
-    }
     p {
       margin: 0;
     }
@@ -226,6 +236,7 @@ const ClosedPlay = styled.div`
   }
 `;
 
+// 사진 유무에 따른 이미지 변화 필요
 // 로고에 따른 스타일 변경 필요
 // 좋아요 기능 구현 필요
 // 슬라이드 기능 구현 필요
@@ -302,8 +313,8 @@ const TroupePage = () => {
         <div className='ongoingPlayList'>
           {troupe.play.ongoing_play.map(ongoing => (
             <div className='ongoingPlayItem' key={ongoing.id}>
-              <img src='/svg/poster_default.svg' alt='포스터 이미지' />
-              {/* <p>{ongoing.poster}</p> */}
+              {/* <img src='/svg/poster_default.svg' alt='포스터 이미지' /> */}
+              <PosterImg src={ongoing.poster} alt='포스터 이미지' />
               <div className='ongoingPlayInfo'>
                 <p className='ongoingTitle'>{ongoing.title}</p>
                 <p className='ongoingDate'>
@@ -322,13 +333,14 @@ const TroupePage = () => {
         </div>
         <div className='tobePlayList'>
           {troupe.play.tobe_play.map(tobe => (
-            <div className='tobePlayItem' key={tobe.id}>
-              <img src='/svg/poster_default.svg' alt='포스터 이미지' />
+            <PlayBox key={tobe.id}>
+              {/* <img src='/svg/poster_default.svg' alt='포스터 이미지' /> */}
+              <PosterImg src={tobe.poster} alt='포스터 이미지' />
               <div className='tobePlayInfo'>
                 <p>{tobe.title}</p>
                 <p>{tobe.start_date} 예정</p>
               </div>
-            </div>
+            </PlayBox>
           ))}
         </div>
       </TobePlay>
@@ -339,10 +351,10 @@ const TroupePage = () => {
         </div>
         <div className='closedList'>
           {troupe.play.closed_play.map(closed => (
-            <div className='closedPlayItem' key={closed.id}>
-              <img src='/svg/poster_default.svg' alt='포스터 이미지' />
+            <PlayBox key={closed.id}>
+              <PosterImg src={closed.poster} alt='포스터 이미지' />
               <p>{closed.title}</p>
-            </div>
+            </PlayBox>
           ))}
         </div>
       </ClosedPlay>
