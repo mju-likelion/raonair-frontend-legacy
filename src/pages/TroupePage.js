@@ -155,6 +155,77 @@ const OngoingBox = styled.div`
   }
 `;
 
+const TobePlay = styled.div`
+  width: 1150px;
+  height: 500px;
+  margin: 0 auto;
+  p {
+    font-weight: bold;
+    text-align: center;
+  }
+  .tobeHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    p {
+      font-size: 36px;
+    }
+  }
+  .tobeHeader::before,
+  .tobeHeader::after {
+    content: '';
+    background: #529acc;
+    width: 150px;
+    height: 5px;
+    font-size: 0px;
+    line-height: 0px;
+    margin: 0 19px;
+  }
+  .tobePlayList {
+    width: 1016px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+  }
+  .tobePlayInfo {
+    font-size: 18px;
+  }
+`;
+
+const ClosedPlay = styled.div`
+  width: 1150px;
+  margin: 0 auto;
+  p {
+    font-weight: bold;
+    text-align: center;
+  }
+  .closedHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    p {
+      font-size: 36px;
+    }
+  }
+  .closedHeader::before,
+  .closedHeader::after {
+    content: '';
+    background: #529acc;
+    width: 150px;
+    height: 5px;
+    font-size: 0px;
+    line-height: 0px;
+    margin: 0 19px;
+  }
+  .closedList {
+    width: 1016px;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+  }
+`;
+
 // 로고에 따른 스타일 변경 필요
 // 좋아요 기능 구현 필요
 // 슬라이드 기능 구현 필요
@@ -245,6 +316,36 @@ const TroupePage = () => {
         </div>
       </OngoingBox>
       <DivideLine />
+      <TobePlay>
+        <div className='tobeHeader'>
+          <p>진행 예정 공연</p>
+        </div>
+        <div className='tobePlayList'>
+          {troupe.play.tobe_play.map(tobe => (
+            <div className='tobePlayItem' key={tobe.id}>
+              <img src='/svg/poster_default.svg' alt='포스터 이미지' />
+              <div className='tobePlayInfo'>
+                <p>{tobe.title}</p>
+                <p>{tobe.start_date} 예정</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </TobePlay>
+      <DivideLine />
+      <ClosedPlay>
+        <div className='closedHeader'>
+          <p>지난 공연</p>
+        </div>
+        <div className='closedList'>
+          {troupe.play.closed_play.map(closed => (
+            <div className='closedPlayItem' key={closed.id}>
+              <img src='/svg/poster_default.svg' alt='포스터 이미지' />
+              <p>{closed.title}</p>
+            </div>
+          ))}
+        </div>
+      </ClosedPlay>
     </>
   );
 };
