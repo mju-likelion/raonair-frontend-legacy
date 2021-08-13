@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import qs from 'qs';
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-// import { useRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import PlayComponent, {PlayBox} from '../components/PlayComponent';
 import SearchComponent from '../components/SearchComponent';
-// import { searchTargetState } from '../globalState/search';
+import { searchTargetState } from '../globalState/search';
 
 const PlaysBox = styled.div`
   height: 477px;
@@ -51,15 +51,19 @@ const Plays = styled.div`
   display: flex;
 `;
 
+/* eslint-disable */
 function SearchPage ({ location }) {
   // query string 있으면 검색결과 렌더링
   // 없으면 검색 창을 렌더링
-  // const [searchTarget] = useRecoilState(searchTargetState);
+  const [searchTarget] = useRecoilState(searchTargetState);
   const [searchResult, setSearchResult] = useState({});
   const [loaded, setLoaded] = useState(true);
+  console.log(searchTarget);
+  console.log(location);
   const searchCondition = qs.parse(location.search, {
     ignoreQueryPrefix: true,
   });
+  const reqUrl = `${process.env.REACT_APP_SERVER_ORIGIN}/api/search/${searchTarget.target}`
   const callApi = async () => {
     setLoaded(false);
     try {
@@ -69,12 +73,12 @@ function SearchPage ({ location }) {
         },
       } = await axios({
         method: 'get',
-        url: `${process.env.REACT_APP_SERVER_ORIGIN}/api/search/play`,
+        url: `${reqUrl}`,
         params: {
           query: `${searchCondition.query}`,
           ...(searchCondition.location
             ? { location: searchCondition.location }
-            : {}),
+            : {...(searchCondition.type) ? {type: searchCondition.type} : {}}),
         },
       });
       return setSearchResult(searchedResults);

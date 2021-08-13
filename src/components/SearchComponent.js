@@ -128,10 +128,12 @@ const SearchComponent = () => {
   const [searchOptions, setSearchOptions] = useState([]);
   const [redirect, setRedirect] = useState(false);
   const [searchTarget, setSearchTarget] = useRecoilState(searchTargetState);
-  const [searchCondition, setsearchCondition] = useState({
+  const [searchCondition, setSearchCondition] = useState({
     searchTerm: '',
-    option: '',
+    location: '',
+    type: '',
   });
+  const [optionQuery, setOptionQuery] = useState('');
 
   useEffect(() => {
     const getSearchOptions = async () => {
@@ -167,13 +169,23 @@ const SearchComponent = () => {
 
   const handleChange = useCallback(
     ({ target: { value, name } }) => {
-      setsearchCondition({ ...searchCondition, [name]: value });
+      if(name === 'location') {
+        setSearchCondition({...searchCondition, type: '', [name]: value});
+      }
+      else if(name === 'type') {
+        setSearchCondition({...searchCondition, location: '', [name]: value})
+      }
+      else{
+        setSearchCondition({ ...searchCondition, [name]: value });
+      }
     },
     [searchCondition],
   );
 
   const handleKeyPress = ({ key }) => {
     if (key === 'Enter') {
+      const a = searchCondition.location ? `location=${searchCondition.location}` : `type=${searchCondition.type}`;
+      setOptionQuery(a);
       setRedirect(true);
     }
   };
@@ -198,7 +210,7 @@ const SearchComponent = () => {
         </SearchTargetBox>
         {redirect && (
           <Redirect
-            to={`/search?query=${searchCondition.searchTerm}&location=${searchCondition.option}`}
+            to={`/search?query=${searchCondition.searchTerm}&${optionQuery}`}
           />
         )}
         <OptionBox>
@@ -229,7 +241,7 @@ const SearchComponent = () => {
           {selectedTarget === 'play' ? (
             <SearchOption onChange={handleChange}>
               <OptionTitle>지역</OptionTitle>
-              <OptionSelect name='option'>
+              <OptionSelect name='location'>
                 <option value=''>지역을 선택해 주세요</option>
                 {searchOptions.map(({ key, value }) => (
                   <option value={key} key={key}>
@@ -241,7 +253,7 @@ const SearchComponent = () => {
           ) : (
             <SearchOption onChange={handleChange}>
               <OptionTitle>타입</OptionTitle>
-              <OptionSelect name='option'>
+              <OptionSelect name='type'>
                 <option value=''>극단 타입을 선택해 주세요</option>
                 <option value='normal'>일반 극단</option>
                 <option value='student'>학생 극단</option>
