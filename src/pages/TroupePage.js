@@ -122,6 +122,37 @@ const OngoingBox = styled.div`
     line-height: 0px;
     margin: 0 19px;
   }
+  .ongoingPlayList {
+    display: flex;
+    justify-content: center;
+  }
+  .ongoingPlayItem {
+    display: flex;
+    .ongoingPlayInfo {
+      margin-left: 45px;
+    }
+    img {
+      width: 250px;
+      height: 365px;
+    }
+    p {
+      margin: 0;
+    }
+    .ongoingTitle {
+      font-size: 48px;
+    }
+    .ongoingDate {
+      font-size: 36px;
+      margin-top: 36px;
+      margin-bottom: 59px;
+    }
+    .ongoingLink {
+      font-size: 24px;
+      text-decoration: underline;
+      text-underline-position: under;
+      cursor: pointer;
+    }
+  }
 `;
 
 // 로고에 따른 스타일 변경 필요
@@ -182,7 +213,6 @@ const TroupePage = () => {
         <div className='staffHeader'>
           <p>극단 구성원</p>
         </div>
-        {/* <p></p> */}
         <div className='staffList'>
           {troupe.team.map(team => (
             <div className='staffItem' key={team.name}>
@@ -198,14 +228,23 @@ const TroupePage = () => {
         <div className='ongoingHeader'>
           <p>진행 중인 공연</p>
         </div>
-        {troupe.play.ongoing_play.map(ongoing => (
-          <div key={ongoing.id}>
-            <p>{ongoing.title}</p>
-            <p>{ongoing.poster}</p>
-            <p>{ongoing.title}</p>
-          </div>
-        ))}
+        <div className='ongoingPlayList'>
+          {troupe.play.ongoing_play.map(ongoing => (
+            <div className='ongoingPlayItem' key={ongoing.id}>
+              <img src='/svg/poster_default.svg' alt='포스터 이미지' />
+              {/* <p>{ongoing.poster}</p> */}
+              <div className='ongoingPlayInfo'>
+                <p className='ongoingTitle'>{ongoing.title}</p>
+                <p className='ongoingDate'>
+                  {ongoing.start_date} ~ {ongoing.end_date}
+                </p>
+                <p className='ongoingLink'>자세히 &gt;</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </OngoingBox>
+      <DivideLine />
     </>
   );
 };
