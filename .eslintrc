@@ -56,8 +56,7 @@
       "error",
       2,
       {
-        "SwitchCase": 1,
-        "ignoreNodes": ["JSXElement *"]
+        "SwitchCase": 1
       }
     ],
     "jsx-a11y/anchor-is-valid": "off",
