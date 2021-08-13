@@ -29,9 +29,7 @@ function App() {
           <Route path='/search/:type'>
             <SearchResultPage />
           </Route>
-          <Route path='/search'>
-            <SearchPage />
-          </Route>
+          <Route path='/search' component={SearchPage} />
           <Route path='/play/:id'>
             <PlayPage />
           </Route>

@@ -1,11 +1,14 @@
 import axios from 'axios';
+import PropTypes from 'prop-types';
+import qs from 'qs';
 import { useState, useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { NavLink } from 'react-router-dom';
+// import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
+import PlayComponent from '../components/PlayComponent';
 import SearchComponent from '../components/SearchComponent';
-import { searchTargetState } from '../globalState/search';
+// import { searchTargetState } from '../globalState/search';
 
 const PlaysBox = styled.div`
   height: 477px;
@@ -42,102 +45,44 @@ const ShowMoreBtn = styled(NavLink)`
   margin-right: 30px;
 `;
 
-const PlayBox = styled(NavLink)`
-  height: 420px;
-  width: 240px;
-  margin-top: 32px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  margin-right: 74px;
-  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
-  border-radius: 6px;
-`;
-
 const Plays = styled.div`
   height: 420px;
   width: 240px;
   display: flex;
 `;
 
-const JudgeBox = styled.div`
-  height: 28px;
-  width: 240px;
-  display: flex;
-  align-items: center;
-`;
-
-const Judge = styled.div`
-  height: 28px;
-  width: 58px;
-  margin-left: 14px;
-  display: flex;
-  align-items: center;
-`;
-
-const JudgeHeart = styled(Judge)`
-  margin-left: 0;
-`;
-
-const JudgeImg = styled.img`
-  height: 20px;
-  width: 21.86px;
-  margin-right: 5px;
-`;
-
-const PlayImage = styled.img`
-  height: 299px;
-  width: 213px;
-  border-radius: 6px;
-`;
-
-const PlayTitle = styled.h4`
-  font-size: 20px;
-  margin: 0 4px 5px 0;
-`;
-
-const PlayDate = styled.p`
-  font-size: 18px;
-  font-weight: lighter;
-  margin: 0;
-`;
-
-function SearchPage() {
+function SearchPage({ location }) {
   // query string 있으면 검색결과 렌더링
   // 없으면 검색 창을 렌더링
-  /* eslint-disable */
-  const [searchTarget] = useRecoilState(searchTargetState);
-  /* eslint-enable */
+  // const [searchTarget] = useRecoilState(searchTargetState);
   const [searchResult, setSearchResult] = useState({});
   const [loaded, setLoaded] = useState(true);
-  const url = new URLSearchParams(useLocation().search);
-  const searchTerm = url.get('query');
-  const searchCondition = {
-    query: url.get('query'),
-    option: url.get('option'),
+  const searchCondition = qs.parse(location.search, {
+    ignoreQueryPrefix: true,
+  });
+  const callApi = async () => {
+    setLoaded(false);
+    try {
+      const {
+        data: {
+          data: { searched_results: searchedResults },
+        },
+      } = await axios({
+        method: 'get',
+        url: `${process.env.REACT_APP_SERVER_ORIGIN}/api/search/play`,
+        params: {
+          query: `${searchCondition.query}`,
+          ...(searchCondition.location
+            ? { location: searchCondition.location }
+            : {}),
+        },
+      });
+      return setSearchResult(searchedResults);
+    } catch (err) {
+      return err;
+    }
   };
   useEffect(() => {
-    const callApi = async () => {
-      setLoaded(false);
-      try {
-        const {
-          data: {
-            data: { searched_results: searchedResults },
-          },
-        } = await axios({
-          method: 'get',
-          url: `${process.env.REACT_APP_SERVER_ORIGIN}/api/search/play`,
-          params: {
-            query: `${searchCondition.query}`,
-            location: `${searchCondition.option}`,
-          },
-        });
-        return setSearchResult(searchedResults);
-      } catch (err) {
-        return err;
-      }
-    };
     callApi();
     setLoaded(true);
   }, []);
@@ -175,14 +120,19 @@ function SearchPage() {
 
   return (
     <>
-      {!searchCondition.query ? (
-        <SearchComponent />
-      ) : (searchResult && Object.keys(searchResult).length === 0) ? <BoxTitle>검색 결과가 없습니다</BoxTitle> : (
-        <>
-          <SearchTerm>{searchTerm}에 대한 검색 결과 입니다</SearchTerm>
+      {!searchCondition.query && <SearchComponent />}
+      {searchCondition.query &&
+      searchResult &&
+      Object.keys(searchResult).length === 0 ? (
+        <BoxTitle>검색 결과가 없습니다</BoxTitle>
+        ) : (
+          <>
+          <SearchTerm>
+            {searchCondition.query}에 대한 검색 결과 입니다
+          </SearchTerm>
           {searchCondition &&
             data.map(({ param, query, categoryTitle, playData }) => (
-              <PlaysBox key={param}>
+              <PlaysBox key={categoryTitle}>
                 <>
                   <PlayBoxNav>
                     <BoxTitle>{categoryTitle}</BoxTitle>
@@ -193,43 +143,25 @@ function SearchPage() {
                   <Plays>
                     {playData &&
                       playData.map(play => {
-                        const {
-                          id,
-                          poster,
-                          title,
-                          likes,
-                          star_avg: starAvg,
-                          start_date: startDate,
-                          end_data: endDate,
-                        } = play;
-                        return (
-                          <PlayBox key={id} to={`/play/${id}`}>
-                            <JudgeBox>
-                              <Judge>
-                                <JudgeImg src='/svg/star.svg' alt='평점' />
-                                {starAvg}
-                              </Judge>
-                              <JudgeHeart>
-                                <JudgeImg src='/svg/heart.svg' alt='찜 갯수' />
-                                {likes}
-                              </JudgeHeart>
-                            </JudgeBox>
-                            <PlayImage src={poster} />
-                            <PlayTitle>{title}</PlayTitle>
-                            <PlayDate>
-                              {`${startDate} ~ ${endDate || ''}`}
-                            </PlayDate>
-                          </PlayBox>
-                        );
+                        return <PlayComponent key={play.id} play={play} />;
                       })}
                   </Plays>
                 </>
               </PlaysBox>
             ))}
-        </>
-      )}
+          </>
+        )}
     </>
   );
 }
+
+SearchPage.propTypes = {
+  location: PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.objectOf(PropTypes.booleanValue),
+    ]),
+  ).isRequired,
+};
 
 export default SearchPage;
