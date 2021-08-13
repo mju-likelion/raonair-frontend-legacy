@@ -42,6 +42,43 @@ const TitleBox = styled.div`
   }
 `;
 
+const StaffBox = styled.div`
+  width: 1150px;
+  height: 276px;
+  margin: 0 auto;
+  font-weight: bold;
+  .staffHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    p {
+      font-size: 36px;
+    }
+  }
+  .staffHeader::before,
+  .staffHeader::after {
+    content: '';
+    background: #529acc;
+    width: 150px;
+    height: 5px;
+    font-size: 0px;
+    line-height: 0px;
+    margin: 0 19px;
+  }
+  .staffList {
+    width: 1015px;
+    height: 193px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    p {
+      text-align: center;
+    }
+  }
+  .staffItem {
+    margin: 0 67px;
+  }
+`;
 // 로고에 따른 스타일 변경 필요
 // 좋아요 기능 구현 필요
 const TroupePage = () => {
@@ -49,7 +86,7 @@ const TroupePage = () => {
   const [loading, setLoading] = useState(true);
   // const [likeImg, setLikeImg] = useState('/svg/like_off.svg');
   // 임시 극단 id값, 추후 props에서 받아온 값으로 수정해야함
-  const troupeId = 2;
+  const troupeId = 1;
 
   // api 호출
   useEffect(() => {
@@ -69,7 +106,7 @@ const TroupePage = () => {
   }, []);
 
   if (loading) {
-    return <h1>로딩중</h1>;
+    return <h1>loading...</h1>;
   }
   if (!troupe) {
     return null;
@@ -95,6 +132,19 @@ const TroupePage = () => {
           <img src='/svg/like_off.svg' alt='좋아요버튼' />
         </div>
       </TitleBox>
+      <StaffBox>
+        <div className='staffHeader'>
+          <p>극단 구성원</p>
+        </div>
+        <div className='staffList'>
+          {troupe.team.map(team => (
+            <div className='staffItem' key={team.name}>
+              <img src={team.photo} alt='인물 이미지' />
+              <p>{team.name}</p>
+            </div>
+          ))}
+        </div>
+      </StaffBox>
     </>
   );
 };
