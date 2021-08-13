@@ -92,4 +92,6 @@ PlayComponent.propTypes = {
   ).isRequired,
 };
 
+export {PlayBox};
+
 export default PlayComponent;

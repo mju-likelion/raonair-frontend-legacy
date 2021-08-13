@@ -51,7 +51,7 @@ const Plays = styled.div`
   display: flex;
 `;
 
-function SearchPage({ location }) {
+function SearchPage ({ location }) {
   // query string 있으면 검색결과 렌더링
   // 없으면 검색 창을 렌더링
   // const [searchTarget] = useRecoilState(searchTargetState);
